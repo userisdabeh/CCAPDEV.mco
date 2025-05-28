@@ -1,23 +1,44 @@
 let accounts = [];
 const viewPasswordButton = document.querySelector('.view--password');
+const loginForm = document.querySelector('.login--form');
 
 document.addEventListener('DOMContentLoaded', () => {
     getStorageData();
 });
 
-document.querySelector('.login--form').addEventListener('submit', (e) => {
+loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const isValid = validateAccount();
+
+    const inputEmail = document.getElementById('userEmail').value;
+    const inputPassword = document.getElementById('userPassword').value;
+
+    if (inputEmail === 'superadmin' && inputPassword === 'batman') {
+        alert('Superadmin login detected. Redirecting to admin page...');
+        loginForm.reset();
+        window.location.href = 'admin.html';
+        return;
+    }
+
+    if (!validateEmail(inputEmail)) {
+        alert('Please enter a valid DLSU email address.');
+        loginForm.reset();
+        return;
+    };
+
+    const isValid = validateAccount(inputEmail, inputPassword);
 
     if (isValid) {
         window.location.href = 'dashboard.html';
     }
-})
+});
 
-function validateAccount() {
-    const inputEmail = document.getElementById('userEmail').value;
-    const inputPassword = document.getElementById('userPassword').value;
+function validateEmail(email) {
+    const emailPattern = /^[a-zA-Z._]+@dlsu\.edu\.ph$/;
 
+    return emailPattern.test(email);
+}
+
+function validateAccount(inputEmail, inputPassword) {
     const accountIndex = accounts.findIndex(accounts => accounts.email === inputEmail);
     if (accountIndex == -1) {
         alert('Account not found');
