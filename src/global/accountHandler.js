@@ -5,6 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
     getStorageData();
 });
 
+document.querySelector('.login--form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const isValid = validateAccount();
+
+    if (isValid) {
+        window.location.href = 'dashboard.html';
+    }
+})
+
 function validateAccount() {
     const inputEmail = document.getElementById('userEmail').value;
     const inputPassword = document.getElementById('userPassword').value;
@@ -24,6 +33,7 @@ function validateAccount() {
 
     if (account.userEmail === inputEmail && account.userPassword === inputPassword) {
         alert('Login successful');
+        return true;
     }
 }
 

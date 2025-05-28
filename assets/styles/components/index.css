@@ -24,8 +24,8 @@ h3 {
 }
 
 .form--icon {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
 }
 
 .view--password {
@@ -40,16 +40,6 @@ h3 {
     border-radius: 4px;
     cursor: pointer;
     z-index: 2;
-}
-
-.social--icon {
-    width: 24px;
-    height: 24px;
-    padding: 4px;
-    border-radius: 50%;
-    border: 1px solid var(--oxford-blue);
-    cursor: pointer;
-    display: flex;
 }
 
 .or--group {
@@ -88,14 +78,6 @@ h3 {
     width: 100%;
 }
 
-.social--login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
-    padding-inline-start: 0;
-}
-
 .form--submit {
     background-color: var(--oxford-blue);
     color: white;
@@ -118,4 +100,30 @@ h3 {
 
 .password--group {
     position: relative;
+}
+
+.social--login {
+    list-style: none;
+    padding-inline-start: 0;
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.social--link {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--oxford-blue);
+    padding: 12px;
+    border-radius: 4px;
+    flex: 1 1 calc(33.33% - 16px); /* Adjust for spacing */
+}
+
+.social--icon {
+    width: 16px;
+    height: 16px;
 }
