@@ -1,4 +1,6 @@
 let accounts = [];
+let loggedInUser = null;
+
 const viewPasswordButton = document.querySelector('.view--password');
 const loginForm = document.querySelector('.login--form');
 
@@ -14,6 +16,8 @@ loginForm.addEventListener('submit', (e) => {
 
     if (inputEmail === 'superadmin' && inputPassword === 'batman') {
         alert('Superadmin login detected. Redirecting to admin page...');
+        loggedInUser = 'superadmin';
+        saveToStorage();
         loginForm.reset();
         window.location.href = 'admin.html';
         return;
@@ -28,6 +32,12 @@ loginForm.addEventListener('submit', (e) => {
     const isValid = validateAccount(inputEmail, inputPassword);
 
     if (isValid) {
+        const currentUserIndex = accounts.findIndex(account => account.email === inputEmail);
+        console.log(currentUserIndex);
+        loggedInUser = currentUserIndex;
+        saveToStorage();
+        console.log(loggedInUser);
+        loginForm.reset();
         window.location.href = 'dashboard.html';
     }
 });
@@ -53,17 +63,18 @@ function validateAccount(inputEmail, inputPassword) {
     }
 
     if (account.email === inputEmail && account.password === inputPassword) {
-        alert('Login successful');
         return true;
     }
 }
 
 function getStorageData() {
     accounts = JSON.parse(localStorage.getItem('gokolabAccounts')) || [];
+    loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser')) || null;
 }
 
 function saveToStorage() {
     localStorage.setItem('gokolabAccounts', JSON.stringify(accounts));
+    sessionStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
 }
 
 viewPasswordButton.addEventListener('click', () => {
