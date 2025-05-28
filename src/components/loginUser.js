@@ -18,7 +18,7 @@ function validateAccount() {
     const inputEmail = document.getElementById('userEmail').value;
     const inputPassword = document.getElementById('userPassword').value;
 
-    const accountIndex = accounts.findIndex(accounts => accounts.userEmail === inputEmail);
+    const accountIndex = accounts.findIndex(accounts => accounts.email === inputEmail);
     if (accountIndex == -1) {
         alert('Account not found');
         return false;
@@ -26,15 +26,23 @@ function validateAccount() {
 
     const account = accounts[accountIndex];
 
-    if (account.userPassword !== inputPassword) {
+    if (account.password !== inputPassword) {
         alert('Incorrect password');
         return false;
     }
 
-    if (account.userEmail === inputEmail && account.userPassword === inputPassword) {
+    if (account.email === inputEmail && account.password === inputPassword) {
         alert('Login successful');
         return true;
     }
+}
+
+function getStorageData() {
+    accounts = JSON.parse(localStorage.getItem('gokolabAccounts')) || [];
+}
+
+function saveToStorage() {
+    localStorage.setItem('gokolabAccounts', JSON.stringify(accounts));
 }
 
 viewPasswordButton.addEventListener('click', () => {
@@ -49,7 +57,3 @@ viewPasswordButton.addEventListener('click', () => {
         viewPasswordButton.textContent = 'View Password';
     }
 });
-
-function getStorageData() {
-    accounts = JSON.parse(localStorage.getItem('gokolabAccounts')) || [];
-}

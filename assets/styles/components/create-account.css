@@ -1,0 +1,25 @@
+.create--account--form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.details {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 4px;
+}
+
+.user--input {
+    width: 100%;
+}
