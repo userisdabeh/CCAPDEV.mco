@@ -8,9 +8,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 32px;
+    padding: 16px;
     background-color: white;
     z-index: 1000;
+}
+
+header > * {
+    padding: 16px;
 }
 
 .logo {
@@ -74,6 +78,7 @@ header {
     text-align: center;
     padding: 10px 0;
     border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 .dropdown--item a {
@@ -82,4 +87,5 @@ header {
 
 .dropdown--item:hover {
     background-color: #eae8e8;
+    transition: all 0.3s ease;
 }
