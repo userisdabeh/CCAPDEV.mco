@@ -28,6 +28,11 @@ function createAccount() {
         return;
     }
 
+    if (!newUserEmail.toLowerCase().endsWith('@dlsu.edu.ph')) {
+        alert('Please use a valid DLSU email address.');
+        return;
+    }
+
     const newUser = {
         firstName: newUserFirstName,
         lastName: newUserLastName,
