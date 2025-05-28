@@ -39,3 +39,21 @@ h3 {
     transition: background-color 0.3s ease;
     width: 100%;
 }
+
+.back--to--index {
+    align-self: flex-start;
+    color: black;
+    font-size: 14px;
+}
+
+.back--to--index:hover {
+    text-decoration: underline;
+    text-underline-offset: 8px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 4px;
+}
