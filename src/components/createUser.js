@@ -32,7 +32,8 @@ function createAccount() {
         firstName: newUserFirstName,
         lastName: newUserLastName,
         email: newUserEmail,
-        password: newUserPassword
+        password: newUserPassword,
+        type: 'student'
     };
 
     accounts.push(newUser);
