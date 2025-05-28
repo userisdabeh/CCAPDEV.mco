@@ -32,3 +32,9 @@ function saveToStorage() {
     localStorage.setItem('gokolabAccounts', JSON.stringify(accounts));
     sessionStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
 }
+
+document.getElementById('logout--button').addEventListener('click', (e) => {
+    e.preventDefault();
+    sessionStorage.removeItem('loggedInUser');
+    window.location.href = 'index.html';
+});
