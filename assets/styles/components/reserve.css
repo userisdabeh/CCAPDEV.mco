@@ -3,3 +3,13 @@ main {
     flex-grow: 1;
     padding: 20px;
 }
+
+.lab--list {
+    padding: 20px;
+}
+
+.lab--room {
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+}

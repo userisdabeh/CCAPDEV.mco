@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="assets/styles/global/global-styling.css">
         <link rel="stylesheet" href="assets/styles/global/userview.css">
         <link rel="stylesheet" href="assets/styles/components/reserve.css">
+        <script src="src/components/reserve.js" defer></script>
         <title>Reserve - Guest</title>
     </head>
     <body>
@@ -20,8 +21,18 @@
             </ul>
             <p class="custom--dropdown" id="logged--in--element">Guest</p>
         </header>
+         <ul class="dropdown--menu" id="user--dropdown">
+            <li class="dropdown--item"><a href="profile.html">Edit Profile</a></li>
+            <li class="dropdown--item"><a href="index.html" id="logout--button">Log Out</a></li>
+        </ul>
         <main>
-
+            <section class="lab--rooms">
+                <h4>Computer Laboratories</h4>
+                <div class="lab--room">
+                    <p class="room--details">G210</p>
+                    <p class="available--slots">32</p>
+                </div>
+            </section>
         </main>
     </body>
 </html>
