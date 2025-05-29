@@ -18,9 +18,11 @@ header > * {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: black;
 }
-
 .nav--methods {
     list-style: none;
     padding-inline-start: 0;
@@ -88,4 +90,13 @@ header > * {
 .dropdown--item:hover {
     background-color: #eae8e8;
     transition: all 0.3s ease;
+}
+
+.method {
+    color: black;
+}
+
+.method:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
