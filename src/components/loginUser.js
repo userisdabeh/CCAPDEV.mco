@@ -15,7 +15,6 @@ loginForm.addEventListener('submit', (e) => {
     const inputPassword = document.getElementById('userPassword').value;
 
     if (inputEmail === 'superadmin' && inputPassword === 'batman') {
-        alert('Superadmin login detected. Redirecting to admin page...');
         loggedInUser = 'superadmin';
         saveToStorage();
         loginForm.reset();
