@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="assets/styles/global/global-styling.css">
         <link rel="stylesheet" href="assets/styles/global/adminview.css">
+        <script src="src/components/admin.js" defer></script>
         <title>GokoLab Admin</title>
     </head>
     <body>
@@ -16,11 +17,31 @@
             <a href="index.html" class="logout--btn" id="logoutButton">Log Out</a>
         </header>
         <main>
-            <aside>
-
-            </aside>
-            <section>
-                
+            <h1>Manager Dashboard</h1>
+            <section class="dashboard--options">
+                <div class="manager room--manager">
+                    <h2>Room Management</h2>
+                    <ul class="manage--list" id="roomManagement">
+                        <li id="addLabRoom">Add Lab Room</li>
+                        <li id="removeLabRoom">Remove Lab Room</li>
+                    </ul>
+                </div>
+                <div class="manager user--manager">
+                    <h2>User Management</h2>
+                    <ul class="manage--list" id="userManagement">
+                        <li id="addUser">Add User</li>
+                        <li id="removeUser">Remove User</li>
+                        <li id="viewUsers">View Users</li>
+                    </ul>
+                </div>
+                <div class="manager reservation--manager">
+                    <h2>Reservation Management</h2>
+                    <ul class="manage--list" id="reservationManagement">
+                        <li id="viewReservations">View Reservations</li>
+                        <li id="manualReservation">Manual Reserve</li>
+                        <li id="removeReservation">Remove Reservation</li>
+                    </ul>
+                </div>
             </section>
         </main>
     </body>
