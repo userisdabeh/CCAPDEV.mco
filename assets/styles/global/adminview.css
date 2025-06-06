@@ -57,25 +57,20 @@ aside {
 }
 
 .option {
-    width: 95%;
+    width: 100%;
     padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
 }
 
-.option:hover {
-    background-color: var(--bic3-blue);
+.option a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.option:not(.active):hover {
+    background-color: #efefef;
     border-radius: 4px;
-
-    & .icon {
-        fill: white;
-    }
-
-    & p {
-        color: white;
-    }
 }
 
 .icon {
