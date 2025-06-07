@@ -3,6 +3,7 @@ let gokoLabRooms = [];
 const addRoomButton = document.getElementById('addRoomBtn');
 const addRoomForm = document.getElementById('addRoomForm');
 const addRoomPopup = document.getElementById('addRoomPopup');
+const editRoomPopup = document.getElementById('editRoomPopup');
 const cancelAddRoomButton = document.getElementById('cancelAddRoomBtn');
 const roomListContent = document.getElementById('roomsListContent');
 const searchRoomForm = document.getElementById('searchRoomForm');
@@ -109,8 +110,9 @@ function displayRooms() {
                     ${room.status.charAt(0).toUpperCase() + room.status.slice(1)}
                 </p>
             </td>
-            <td class="room--actions--data" onclick="deleteRoom(${room.roomID})">
-                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash3 delete--icon" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/></svg>
+            <td class="room--actions--data"">
+                <svg xmlns="http://www.w3.org/2000/svg" onclick="deleteRoom(${room.roomID})" class="bi bi-trash3 delete--icon" viewBox="0 0 16 16" title="Delete Room"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="delete--icon" onclick="editRoom(${room.roomID})" title="Edit Room"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
             </td>
         `;
 
@@ -124,6 +126,12 @@ function deleteRoom(roomID) {
     gokoLabRooms.splice(roomToDeleteIndex, 1);
     saveStorageData();
     displayRooms();   
+}
+
+function editRoom(roomID) {
+    const roomToEditIndex = gokoLabRooms.findIndex(room => room.roomID === roomID);
+
+    editRoomPopup.style.display='flex';
 }
 
 function closeAddRoomPopup() {

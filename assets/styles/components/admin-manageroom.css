@@ -67,7 +67,7 @@
 }
 
 .room--name {
-    width: 40%;
+    width: 30%;
 }
 
 .room--name--data {
@@ -134,7 +134,7 @@
     align-items: center;
 }
 
-#addRoomForm {
+#addRoomForm, #editRoomForm {
     display: flex;
     flex-direction: column;
     width: 100%;
