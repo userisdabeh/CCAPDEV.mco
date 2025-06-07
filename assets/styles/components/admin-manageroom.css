@@ -1,0 +1,180 @@
+.user--input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+}
+
+.top--bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 16px;
+    height: 65px;
+    gap: 16px;
+}
+
+.addroom--btn {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background-color: var(--oxford-blue);
+    color: white;
+    gap: 8px;
+    border: 1px solid var(--oxford-blue);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 100%;
+
+    &:hover {
+        background-color: var(--prussian-blue);
+        border-color: var(--prussian-blue);
+    }
+}
+
+.addroom--icon {
+    fill: white;
+    width: 16px;
+    height: 16px;
+}
+
+.rooms--container {
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.rooms--list {
+    text-align: center;
+    align-items: center;
+}
+
+.rooms--list thead tr th{
+    padding: 12px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.rooms--list tbody tr:first-child td {
+    padding-top: 16px;
+}
+
+.rooms--list tbody tr td {
+    padding: 12px 0;
+}
+
+.room--name {
+    width: 40%;
+}
+
+.room--name--data {
+    text-align: left;
+}
+
+.room--slots {
+    width: 25%;
+}
+
+.room--status {
+    width: 15%;
+}
+
+.room--status--data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.room--actions {
+    width: 5%;
+}
+
+.delete--icon {
+    width: 16px;
+    height: 16px;
+    fill: black;
+    cursor: pointer;
+}
+
+.active--status {
+    border: #d9ead3 solid 1px;
+    background-color: #d9ead3;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #6aa84f;
+    max-width: 90%;
+}
+
+.inactive--status {
+    border: #f4cccc solid 1px;
+    background-color: #f4cccc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #cc0000;
+    max-width: 50%;
+}
+
+.popup--container {
+    position: absolute;
+    left: calc(50% - 300px);
+    top: calc(50% - 150px);
+    z-index: 1000;
+    width: 600px;
+    height: 300px;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    padding: 24px;
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+#addRoomForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+}
+
+.room--basic_info {
+    display: flex;
+    max-width: 100%;
+    gap: 8px;
+}
+
+.room--info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.btn--container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.popup--btn {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #999999;
+    background-color: #999999;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.norooms--message {
+    color: #999999;
+    font-style: italic;
+}

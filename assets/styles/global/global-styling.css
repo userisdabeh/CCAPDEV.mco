@@ -30,3 +30,9 @@ h1, h2, h3, h4, h5, h6, p, ul, ol {
 .user--input:focus {
     outline: none;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
