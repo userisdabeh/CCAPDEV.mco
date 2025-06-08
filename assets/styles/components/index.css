@@ -1,0 +1,88 @@
+.form--icon {
+    width: 20px;
+    height: 20px;
+}
+
+.view--password {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    font-size: 10px;
+    background-color: var(--oxford-blue);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.or--group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.or--line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--oxford-blue);
+    flex: 1;
+}
+
+.other--account--methods {
+    font-size: 12px;
+}
+
+.login--form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.form--group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#userPassword {
+    padding-right: 120px; /* Adjust padding to accommodate the view password button */
+}
+
+.account--methods {
+    display: flex;
+    justify-content: space-between;
+}
+
+.password--group {
+    position: relative;
+}
+
+.social--login {
+    list-style: none;
+    padding-inline-start: 0;
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.social--link {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--oxford-blue);
+    padding: 12px;
+    border-radius: 4px;
+    flex: 1 1 calc(33.33% - 16px); /* Adjust for spacing */
+}
+
+.social--icon {
+    width: 16px;
+    height: 16px;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/styles/global/global-styling.css">
+        <link rel="stylesheet" href="assets/styles/global/account-methods.css">
+        <link rel="stylesheet" href="assets/styles/components/create-account.css">
+        <script src="src/components/createUser.js" defer></script>
+        <title>Register to GoKoLab</title>
+    </head>
+    <body>
+        <section>
+            <a href="index.html" class="back--to--index">&lt;-- Back to Login Page</a>
+            <h3>Register to GoKoLab</h3>
+            <form method="post" class="create--account--form">
+                <div class="details name--details">
+                    <div class="field">
+                        <p>First Name</p>
+                        <input type="text" name="newUserFirstName" id="newUserFirstName" placeholder="First Name" class="user--input" required>
+                    </div>
+                    <div class="field">
+                        <p>Last Name</p>
+                        <input type="text" name="newUserLastName" id="newUserLastName" placeholder="Last Name" class="user--input" required>
+                    </div>
+                </div>
+                <div class="details field">
+                    <p>DLSU Email</p>
+                    <input type="email" name="newUserEmail" id="newUserEmail" placeholder="DLSU Email" class="user--input" required>
+                </div>
+                <div class="details password--field">
+                    <div class="field">
+                        <p>Password</p>
+                        <input type="password" name="newUserPassword" id="newUserPassword" placeholder="Password" class="user--input" required>
+                    </div>
+                    <div class="field">
+                        <p>Confirm Password</p>
+                        <input type="password" name="newUserConfirmPassword" id="newUserConfirmPassword" placeholder="Confirm Password" class="user--input" required>
+                    </div>
+                </div>
+                <input type="submit" value="Register" class="form--submit">
+            </form>
+        </section>
+    </body>
+</html>

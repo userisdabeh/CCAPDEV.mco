@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/styles/global/global-styling.css">
+        <link rel="stylesheet" href="assets/styles/global/userview.css">
+        <link rel="stylesheet" href="assets/styles/components/dashboard.css">
+        <script src="src/components/dashboard.js" defer></script>
+        <title>Dashboard - Guest</title>
+    </head>
+    <body>
+        <header>
+            <a href="dashboard.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M216-144q-46 0-66-40.5t8.98-75.71L360-504v-240h-35.79q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21 10.35-25.71T324-816h312q15.3 0 25.65 10.29Q672-795.42 672-780.21t-10.35 25.71Q651.3-744 636-744h-36v240l201 244q28 35 8 75.5T744-144H216Zm0-72h528L528-480v-264h-96v264L216-216Zm265-264Z"/></svg>
+                <p>GokoLab</p>
+            </a>
+            <ul class="nav--methods">
+                <li ><a href="reserve.html" class="method">Reserve</a></li>
+                <li><a href="search.html" class="method">Search</a></li>
+            </ul>
+            <p class="custom--dropdown" id="logged--in--element">Guest</p>
+        </header>
+        <ul class="dropdown--menu" id="user--dropdown">
+            <li class="dropdown--item"><a href="profile.html">Edit Profile</a></li>
+            <li class="dropdown--item"><a href="index.html" id="logout--button">Log Out</a></li>
+        </ul>
+        <main>
+            <div class="hero--welcome">
+                <h1>Welcome to GokoLab</h1>
+                <p class="hero--description">Your go-to app for reserving computer lab rooms hassle-free. Whether you&apos;re prepping for a big project, studying with friends, or just need a quiet space with tech gear, GokoLab makes booking your spot quick and easy. Say goodbye to waiting in line and hello to your dedicated workspace—right at your fingertips.</p>
+            </div>
+            <a href="reserve.html" class="link--button">Reserve your slot now!</a>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/styles/global/global-styling.css">
+        <link rel="stylesheet" href="assets/styles/global/userview.css">
+        <link rel="stylesheet" href="assets/styles/components/reserve.css">
+        <script src="src/components/reserve.js" defer></script>
+        <title>Reserve - Guest</title>
+    </head>
+    <body>
+        <header>
+            <a href="dashboard.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M216-144q-46 0-66-40.5t8.98-75.71L360-504v-240h-35.79q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21 10.35-25.71T324-816h312q15.3 0 25.65 10.29Q672-795.42 672-780.21t-10.35 25.71Q651.3-744 636-744h-36v240l201 244q28 35 8 75.5T744-144H216Zm0-72h528L528-480v-264h-96v264L216-216Zm265-264Z"/></svg>
+                <p>GokoLab</p>
+            </a>
+            <ul class="nav--methods">
+                <li ><a href="reserve.html" class="method">Reserve</a></li>
+                <li><a href="search.html" class="method">Search</a></li>
+            </ul>
+            <p class="custom--dropdown" id="logged--in--element">Guest</p>
+        </header>
+         <ul class="dropdown--menu" id="user--dropdown">
+            <li class="dropdown--item"><a href="profile.html">Edit Profile</a></li>
+            <li class="dropdown--item"><a href="index.html" id="logout--button">Log Out</a></li>
+        </ul>
+        <main>
+            <section class="lab--list">
+                <h4>Computer Laboratories</h4>
+                <table class="lab--rooms">
+                    <colgroup>
+                        <col class="room--name">
+                        <col class="room--seats--left">
+                    </colgroup>
+                    <tr class="lab--room">
+                        <td>G210</td>
+                        <td>32</td>
+                    </tr>
+                    <tr class="lab--room">
+                        <td>G211</td>
+                        <td>32</td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>

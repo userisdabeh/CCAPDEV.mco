@@ -1,0 +1,18 @@
+.create--account--form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.details {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+}
+
+.user--input {
+    width: 100%;
+}
