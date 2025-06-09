@@ -6,6 +6,38 @@
 
 }
 
+/* User Button*/
+.user-btn{
+    width: 320px;
+    margin: 35px auto;
+    position: relative;
+    box-shadow: 0 0 20px 9px #333;
+    border-radius: 30px;
+}
+
+.toggle-btn{
+    padding: 15px 50px;
+    cursor: pointer;
+    background: transparent ;
+    border: 0;
+    outline: none;
+    position: relative;
+    color: #333;
+    z-index: 2;
+}
+
+#btn{
+    top:0;
+    left: 0;
+    position: absolute;
+    width: 160px;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 30px;
+    transition: .5s;
+    z-index: 1;
+}
+
 body{
     display:flex;
     justify-content:center;
@@ -18,7 +50,7 @@ body{
 }
 
 .main-register{
-    width: 420px;
+    width: 620px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(20px);
@@ -53,9 +85,19 @@ body{
     padding: 20px 45px 20px 20px;
 }
 
+/*Name*/
+.two-forms{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    height: 80px;
+
+}
+
 .input-box input::placeholder{
     color: #fff;
 }
+
 
 .main-register .terms{
     display: flex;

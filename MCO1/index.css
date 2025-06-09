@@ -65,6 +65,12 @@ body{
     font-size: 20px;
 }
 
+/*eye password*/
+.input-box i{
+    width: 35px;
+    cursor: pointer;
+}
+
 .main .remember-forgot{
     display: flex;
     justify-content: space-between;

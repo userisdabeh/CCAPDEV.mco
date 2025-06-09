@@ -6,20 +6,26 @@
         <title>Register GokoLab</title>
         <link rel="stylesheet" href="register.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <script src="register.js"></script>
     </head>
 
     <body>
         <div class="main-register">
             <form action="">
                 <h1>GokoLab Register</h1>
-                <div class="input-box">
+                <div class="user-btn">
+                    <div id="btn"></div>
+                    <button type="button" class="toggle-btn" onclick="userBtn()">Student</button>
+                    <button type="button" class="toggle-btn" onclick="userBtn()">Technician</button>
+                </div>
+                <div class="two-forms"><div class="input-box">
                     <input type="text" placeholder="First Name" required>
-                </div>
+                    </div>
 
-                <div class="input-box">
-                    <input type="text" placeholder="Last Name" required>
+                    <div class="input-box">
+                        <input type="text" placeholder="Last Name" required>
+                    </div>
                 </div>
-
                 <div class="input-box">
                     <input type="email" placeholder="DLSU Email" required>
                 </div>
