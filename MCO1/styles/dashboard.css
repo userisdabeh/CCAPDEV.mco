@@ -1,0 +1,131 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 32px;
+}
+
+.top--bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #666666;
+    width: 100%;
+}
+
+.quick--actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.summary--card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1 1 calc(30% - 16px);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid darkgreen;
+}
+
+.card--text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.reservations--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid darkgray;
+}
+
+.list--header {
+    background-color: darkgrey;
+    padding: 12px;
+    width: 100%;
+}
+
+.reservations--list {
+    width: 100%;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.reservation--item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #999999;
+    border-radius: 4px;
+    padding: 16px;
+}
+
+.reservation--info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.reservation-icon {
+    fill: black;
+    width: 50px;
+    height: 50px;
+    background-color: #cccccc;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.reservation--details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.status-w-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.delete-reservation-icon {
+    fill: black;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.confirmed-status {
+    background-color: green;
+    color: #b6d7a8;
+}
+
+.pending-status {
+    background-color: orange;
+    color: #f9cb9c;
+}
