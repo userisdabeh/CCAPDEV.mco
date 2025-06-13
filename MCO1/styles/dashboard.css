@@ -6,15 +6,6 @@ main {
     padding: 32px;
 }
 
-.top--bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #666666;
-    width: 100%;
-}
-
 .quick--actions {
     display: flex;
     align-items: center;
@@ -52,53 +43,44 @@ main {
     align-items: center;
     width: 100%;
     border-radius: 4px;
-    border: 1px solid darkgray;
 }
 
 .list--header {
-    background-color: darkgrey;
     padding: 12px;
     width: 100%;
 }
 
-.reservations--list {
+.reservations--table {
     width: 100%;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    overflow-y: auto;
-    max-height: 400px;
-}
-
-.reservation--item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #999999;
     border-radius: 4px;
-    padding: 16px;
+    border: 1px solid #CCCCCC;
 }
 
-.reservation--info {
+.table-header {
+    background-color: #FAFAFA;
+    padding: 8px 12px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+td {
+    text-align: center;
+    padding: 8px 12px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px;
-}
-
-.reservation-icon {
-    fill: black;
-    width: 50px;
-    height: 50px;
-    background-color: #cccccc;
-    padding: 12px;
-    border-radius: 8px;
-}
-
-.reservation--details {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    justify-content: center;
 }
 
 .status-w-actions {
