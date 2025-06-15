@@ -122,6 +122,10 @@ nav {
 }
 
 main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px;
     flex-grow: 1;
     height: auto;
     margin-top: 60px;
@@ -208,4 +212,20 @@ span.btn-w-icon {
     padding-bottom: 12px;
     border-bottom: 1px solid #666666;
     width: 100%;
+}
+
+.user-input {
+    padding: 8px;
+}
+
+.user-input:focus {
+    outline: none;
+}
+
+.italicized {
+    font-style: italic;
+}
+
+.required-tag {
+    color: red;
 }
