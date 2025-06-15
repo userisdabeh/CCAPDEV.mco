@@ -45,42 +45,19 @@ main {
     border-radius: 4px;
 }
 
+.reservations--table {
+    width: 100%;
+    border-collapse: collapse;
+
+    & thead {
+        background-color: #f3f3f3;
+        color: #666666;
+    }
+}
+
 .list--header {
     padding: 12px;
     width: 100%;
-}
-
-.reservations--table {
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid #CCCCCC;
-}
-
-.table-header {
-    background-color: #FAFAFA;
-    padding: 8px 12px;
-    border-bottom: 1px solid #CCCCCC;
-}
-
-td {
-    text-align: center;
-    padding: 8px 12px;
-}
-
-.actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-}
-
-.action-btn {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .status-w-actions {
@@ -99,7 +76,6 @@ td {
 .status {
     padding: 4px 8px;
     border-radius: 4px;
-    font-weight: bold;
 }
 
 .confirmed-status {
@@ -110,4 +86,48 @@ td {
 .pending-status {
     background-color: orange;
     color: #f9cb9c;
+}
+
+.table-container {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #f3f3f3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+    padding: 18px;
+}
+
+.reservation-data td {
+    border-bottom: 1px solid #CCCCCC;
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.action-btn {
+    width: 20px;
+    height: 20px;
+    fill: black;
+    display: block;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 12px;
+    margin: 0;
+    height: 100%;
+}
+
+tbody {
+    & tr :not(:first-child) {
+    text-align: center;
+    }
+
+    & tr:last-child td {
+        border-bottom: none;
+    }
 }
