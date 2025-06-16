@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delete Account</title>
+  <link rel="stylesheet" href="styles/delete_acc.css">
+</head>
+<body>
+
+<div class="popup-overlay" id="deletePopup">
+  <div class="popup">
+    <h2>Delete Account?</h2>
+    <p>Are you sure you want to delete your account?</p>
+    <div class="notice">Notice: This will delete your profile and cancel all reservations.</div>
+    <div class="popup-buttons">
+      <button class="cancel-btn" onclick="closePopup()">Cancel</button>
+      <button class="delete-btn" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function closePopup() {
+    document.getElementById('deletePopup').style.display = 'none';
+  }
+
+  function confirmDelete() {
+    alert("Your account has been deleted.");
+    closePopup();
+    window.location.href = "index.html";
+
+  }
+</script>
+
+</body>
+</html>
+
