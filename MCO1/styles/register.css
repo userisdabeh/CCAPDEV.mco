@@ -16,7 +16,7 @@
 }
 
 .toggle-btn{
-    padding: 15px 50px;
+    padding: 20px 50px;
     cursor: pointer;
     background: transparent ;
     border: 0;
@@ -50,7 +50,7 @@ body{
 }
 
 .main-register{
-    width: 620px;
+    width: 720px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(20px);
@@ -103,7 +103,7 @@ body{
     display: flex;
     justify-content: space-between;
     font-size: 14.5px;
-    margin: -15px 0 15px;
+    margin: -10px 0 10px;
 }
 
 .terms label input{
@@ -144,4 +144,16 @@ body{
 
 .login-register p a:hover{
     text-decoration: underline;
+}
+
+/*form control-validation*/
+.form-control small{
+    visibility: hidden;
+    position: relative;
+    bottom: 0;
+    left: 0;
+}
+
+.form-control.error input{
+    border-color: #e74c3c;
 }
