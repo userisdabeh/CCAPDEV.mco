@@ -1,106 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles/student.css">
-        <link rel="stylesheet" href="styles/reserve.css">
-        <script src="src/reserve.js" defer></script>
-        <title>GoKoLab Student Dashboard - Reserve</title>
-    </head>
-    <body>
-        <header>
-            <div class="logo">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm80-120h400L544-400H416L280-240Zm-80 40h560L520-492v-268h-80v268L200-200Zm280-280Z"/></svg>
-                <h4>GoKoLab Student Portal</h4>
-            </div>
-            <div class="user--info">
-                <img src="assets/icons/default_profile.jpg" alt="User Profile" class="img-circle">
-                <p id="username">John Doe</p>
-            </div>
-        </header>
-        <nav>
-            <ul class="nav--links">
-                <li class="nav--link">
-                    <a href="dashboard.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav--link active">
-                    <a href="reserve.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M120-120v-80h80v-640h400v40h160v600h80v80H680v-600h-80v600H120Zm160-640v560-560Zm160 320q17 0 28.5-11.5T480-480q0-17-11.5-28.5T440-520q-17 0-28.5 11.5T400-480q0 17 11.5 28.5T440-440ZM280-200h240v-560H280v560Z"/></svg>
-                        Reserve
-                    </a>
-                </li>
-                <li class="nav--link">
-                    <a href="profile.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M400-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM80-160v-112q0-33 17-62t47-44q51-26 115-44t141-18h14q6 0 12 2-8 18-13.5 37.5T404-360h-4q-71 0-127.5 18T180-306q-9 5-14.5 14t-5.5 20v32h252q6 21 16 41.5t22 38.5H80Zm560 40-12-60q-12-5-22.5-10.5T584-204l-58 18-40-68 46-40q-2-14-2-26t2-26l-46-40 40-68 58 18q11-8 21.5-13.5T628-460l12-60h80l12 60q12 5 22.5 11t21.5 15l58-20 40 70-46 40q2 12 2 25t-2 25l46 40-40 68-58-18q-11 8-21.5 13.5T732-180l-12 60h-80Zm40-120q33 0 56.5-23.5T760-320q0-33-23.5-56.5T680-400q-33 0-56.5 23.5T600-320q0 33 23.5 56.5T680-240ZM400-560q33 0 56.5-23.5T480-640q0-33-23.5-56.5T400-720q-33 0-56.5 23.5T320-640q0 33 23.5 56.5T400-560Zm0-80Zm12 400Z"/></svg>
-                        Account Settings
-                    </a>
-                </li>
-            </ul>
-            <a href="index.html" class="logout--btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg>
-                <p>Logout</p>
-            </a>
-        </nav>
-        <main>
-            <section class="top--bar">
-                <div class="text-w-subtitle">
-                    <h3>My Reservations</h3>
-                    <p class="disabled-text">View and manage your lab seat reservations</p>
-                </div>
-            </section>
-            <section class="room-n-date-selector">
-                    <form method="get" class="selector" id="searchForm">
-                        <div class="search--field">
-                            <label for="roomSelect">Select a Lab: <span class="required-tag">*</span></label>
-                            <select name="roomSelect" id="roomSelect" class="user-input" required>
-                                <!-- Will be dynamically populated by JavaScript -->
-                                <option value="" selected disabled>Select a room</option>
-                                <option value="G210">G210</option>
-                                <option value="G211">G211</option>
-                                <option value="G302A">G302A</option>
-                                <option value="G302B">G302B</option>
-                                <option value="G304B">G304B</option>
-                                <option value="G306A">G306A</option>
-                                <option value="G306B">G306B</option>
-                            </select>
-                        </div>
-                        <div class="search--field">
-                            <label for="dateSelect">Date: <span class="required-tag">*</span></label>
-                            <select name="dateSelect" id="dateSelect" class="user-input" required>
-                                <!-- Will be dynamically populated by JavaScript -->
-                                <option value="" selected disabled>Select a date</option>
-                                <option value="20250616">June 16, 2025</option>
-                                <option value="20250617">June 17, 2025</option>
-                                <option value="20250618">June 18, 2025</option>
-                                <option value="20250619">June 19, 2025</option>
-                                <option value="20250620">June 20, 2025</option>
-                                <option value="20250621">June 21, 2025</option>
-                                <option value="20250623">June 23, 2025</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="search--room--btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
-                            <p>Search</p>
-                        </button>
-                    </form>
-                    <div class="search--results" id="searchResults">
-                        <div class="text--results">
-                            <h4>No room selected</h4>
-                            <p class="disabled-text">No date selected</p>
-                        </div>
-                    </div>
-            </section>
-            <section id="selectedSummary" style="margin-top: 2rem;">
-                <h4>Selected Seats</h4>
-                <ul id="selectedList"></ul>
-                <button id="submitSelection">Submit Reservation</button>
-                <pre id="jsonOutput" style="background: #f4f4f4; padding: 1em; border: 1px solid #ccc;"></pre>
-            </section>
+const searchResults = document.getElementById("searchResults");
+const searchForm = document.getElementById("searchForm");
 
-        </main>
-    </body>
-</html>
+searchForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    searchResults.innerHTML = "";
+
+    const searchedLab = searchForm.roomSelect.value;
+    const searchedDate = searchForm.dateSelect.value;
+
+    const stringedDate = convertToDate(searchedDate);
+
+    const textResultsDiv = document.createElement("div");
+    textResultsDiv.className = "text--results";
+    textResultsDiv.innerHTML = `<h4>${searchedLab}</h4><p class="disabled-text">${stringedDate}</p>`;
+    searchResults.appendChild(textResultsDiv);
+
+    const resultsList = document.createElement("div");
+    resultsList.className = "results--list";
+
+    const table = document.createElement("table");
+    table.className = "seat--selector";
+
+    const colgroup = document.createElement("colgroup");
+    colgroup.innerHTML = `<col style="width: 20%;">`;
+    table.appendChild(colgroup);
+
+    const thead = document.createElement("thead");
+    thead.innerHTML = `
+        <tr>
+            <th>Seat</th>
+            <th colspan="2">9:00</th>
+            <th colspan="2">10:00</th>
+            <th colspan="2">11:00</th>
+            <th colspan="2">12:00</th>
+            <th colspan="2">13:00</th>
+            <th colspan="2">14:00</th>
+            <th colspan="2">15:00</th>
+            <th colspan="2">16:00</th>
+            <th colspan="2">17:00</th>
+            <th colspan="2">18:00</th>
+            <th colspan="2">19:00</th>
+            <th colspan="2">20:00</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    for (let i = 1; i <= 20; i++) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>
+                <div class="seat--label">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m320-80 40-280H160l360-520h80l-40 320h240L400-80h-80Z"/></svg>
+                    <p>${i}</p>
+                </div>
+            </td>
+            ${generateTimeSlots(searchedDate, searchedLab, i)}
+        `;
+        tbody.appendChild(row);
+    }
+
+    table.appendChild(tbody);
+    resultsList.appendChild(table);
+    searchResults.appendChild(resultsList);
+
+    addTileListeners();
+});
+
+function convertToDate(date) {
+    const year = date.substring(0, 4);
+    const month = date.substring(4, 6);
+    const day = date.substring(6, 8);
+
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    return `${months[parseInt(month) - 1]} ${day}, ${year}`;
+}
+
+function generateTimeSlots(date, lab, seatNumber) {
+    const times = [
+        "0900", "0930", "1000", "1030", "1100", "1130",
+        "1200", "1230", "1300", "1330", "1400", "1430",
+        "1500", "1530", "1600", "1630", "1700", "1730",
+        "1800", "1830", "1900", "1930", "2000"
+    ];
+
+    return times.map(time =>
+        `<td class="clickable-tile" id="${date}-${lab}-${time}-S${seatNumber}"></td>`
+    ).join("");
+}
+
+function addTileListeners() {
+    const clickableTiles = document.querySelectorAll(".clickable-tile");
+    clickableTiles.forEach(tile => {
+        tile.addEventListener("click", (e) => {
+            e.target.classList.toggle("selected");
+            updateSelectedList();
+        });
+    });
+}
+
+function updateSelectedList() {
+    const selectedTiles = document.querySelectorAll(".clickable-tile.selected");
+    const selectedList = document.getElementById("selectedList");
+
+    selectedList.innerHTML = "";
+
+    selectedTiles.forEach(tile => {
+        const li = document.createElement("li");
+        li.textContent = tile.id;
+        selectedList.appendChild(li);
+    });
+}
+
+document.getElementById("submitSelection").addEventListener("click", () => {
+    const selectedTiles = document.querySelectorAll(".clickable-tile.selected");
+    const selectedIDs = Array.from(selectedTiles).map(tile => tile.id);
+
+    const reservationData = {
+        selected: selectedIDs,
+        timestamp: new Date().toISOString()
+    };
+
+    document.getElementById("jsonOutput").textContent = JSON.stringify(reservationData, null, 2);
+});
