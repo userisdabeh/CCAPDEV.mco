@@ -1,306 +1,111 @@
-*{
-    margin: 0;
-    padding:0;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-    font-family: sans-serif;
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-body{
+.quick--actions {
     display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
-.sidebar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 110px;
-    height: 100vh;
+.summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.summary--card {
     display: flex;
     flex-direction: column;
-    background: #214c2c;
-    color: #fff;
-    padding: 0 1.2rem;
-    overflow: hidden;
-    transition: width 0.5s ease;
-}
-
-.sidebar:hover{
-    width: 240px;
-    transition: 0.5s;
-}
-
-.logo{
-    height: 80px;
-    padding: 16px;
-}
-
-.menu{
-    height: 88%;
-    position: relative;
-    list-style: none;
-    padding:0;
-}
-
-.menu li{
-    padding: .6rem;
-    margin: 8px 0;
+    gap: 20px;
+    flex: 1 1 calc(30% - 16px);
+    padding: 20px;
     border-radius: 8px;
-    transition: all 0.5s ease-in-out;
+    border: 1px solid darkgreen;
 }
 
-.menu li:hover, 
-.active{
-    background:  rgba(255, 255, 255, .2);
-}
-
-.menu a{
-    color:#fff;
-    font-size: 14px;
-    text-decoration: none;
+.card--text {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 12px;
 }
 
-.menu a span{
-    overflow: hidden;
-}
-
-.menu a i {
-    font-size: 1.2rem;
-}
-.logout{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-}
-
-/*main content*/
-.main--content{
-   position: relative;
-   background: #ebe9e9; 
-   width: 100%;
-   padding: 1rem;
-}
-
-.header--wrapper img{
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.header--wrapper{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px 2rem;
-    margin-bottom: 1rem;
-}
-
-.header--title{
-    color: #214c2c;
-}
-
-.user--info{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.search--box{
-    background: rgba(237, 237, 237);
-    border-radius: 15px;
-    color: #214c2c;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 12px;
-}
-
-.search--box input{
-    background: transparent;
-    padding: 10px;
-}
-
-.search--box i{
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.5s ease-out
-}
-
-.search--box i:hover{
-    transform: scale(1.1);
-}
-
-/*card container*/
-.card--container{
-    background: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-}
-
-.card--wrapper{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.main--title{
-    color: #214c2c;
-    padding-bottom: 10px;
-    font-size: 15px;
-}
-
-.payment--card{
-    background: rgba(237, 237, 237);
-    border-radius: 10px;
-    padding: 1.2rem;
-    height: 100px;
-    width: 200px;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.5s ease-in-out;
-}
-
-.payment--card:hover{
-    transform: translateY(-5px);
-}
-
-.card--header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.amount{
+.reservations--container {
     display: flex;
     flex-direction: column;
-}
-
-.title{
-   font-size: 14px;
-   font-weight: 200; 
-}
-
-.amount--value{
-    font-size: 24px;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 600;
-}
-
-.bi-pc-display{
-    color: #fff;
-    padding: 1rem;
-    height: 60px;
-    width: 60px;
-    text-align: center;
-    font-size: small;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    background: #47ab86;
-
-}
-
-.bi-check-circle-fill{
-    color: #fff;
-    padding: 1rem;
-    height: 60px;
-    width: 60px;
-    text-align: center;
-    font-size: small;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    background: #47ab86;
-
-}
-
-.bi-calendar-event-fill{
-    color: #fff;
-    padding: 1rem;
-    height: 60px;
-    width: 60px;
-    text-align: center;
-    font-size: small;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    background: #47ab86;
-
-}
-
-.bi-wrench-adjustable-circle{
-    color: #fff;
-    padding: 1rem;
-    height: 60px;
-    width: 60px;
-    text-align: center;
-    font-size: small;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    background: #47ab86;
-
-}
-
-/*table*/
-.tabular--wrapper{
-    background: #fff;
-    margin-top: 1rem;
-    border-radius: 10px;
-    padding: 2rem;
-}
-
-.table-container{
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    border-radius: 4px;
 }
 
-table{
+.reservations--table {
     width: 100%;
     border-collapse: collapse;
+
+    & thead {
+        background-color: #f3f3f3;
+        color: #666666;
+    }
 }
 
-thead{
-    background: #214c2c;
-    color: #fff;
+.list--header {
+    padding: 12px;
+    width: 100%;
 }
 
-th{
-    padding: 15px;
-    text-align: left;
-}
-
-tbody{
-    background: #f2f2f2;
-}
-
-td{
-    padding: 15px;
-    font-size: 14px;
-    color: #333;
-}
-
-tr:nth-child(even){
-    background: #fff;
-}
-
-tfoot{
-    background: #214c2c;
-    font-weight: bold;
-    color: #fff;
-}
-
-tfoot td{
-    padding: 15px;
-    color: #fff;
-}
-
-.table--container button{
-    color: green;
-    background: none;
+.delete-reservation-icon {
+    fill: black;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
+}
+
+.table-container {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #f3f3f3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+    padding: 18px;
+    
+}
+
+.reservation-data td {
+    border-bottom: 1px solid #CCCCCC;
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.action-btn {
+    width: 20px;
+    height: 20px;
+    fill: black;
+    display: block;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 12px;
+    margin: 0;
+    height: 100%;
+}
+
+tbody {
+    & tr {
+    text-align: center;
+    }
+
+    & tr:last-child td {
+        border-bottom: none;
+    }
 }

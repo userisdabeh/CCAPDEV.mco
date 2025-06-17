@@ -1,0 +1,109 @@
+main {
+    gap: 8px;
+}
+
+.room-n-date-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.selector {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    padding: 8px;
+}
+
+.search--field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.search--room--btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 8px;
+}
+
+.search--results {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.results--list {
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.seat--selector {
+    width: 100%;
+}
+
+.clickable-tile {
+    cursor: pointer;
+    border-right: 1px solid #cccccc;
+}
+
+.seat--label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tbody tr td {
+    padding: 8px 4px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+tbody tr:first-child {
+    text-align: center;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr td:last-child {
+    border-right: none;
+}
+
+tbody tr td:nth-child(odd):not(:last-child) {
+    border-right: 1px solid black;
+}
+
+thead tr th {
+    padding: 12px 4px;
+    text-align: center;
+    background-color: #CCCCCC;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+thead tr th:last-child {
+    border-right: none;
+    border-top-right-radius: 3px;
+}
+
+thead tr th:first-child {
+    border-top-left-radius: 3px;
+}
+
+.selected {
+    background-color: green;
+}
