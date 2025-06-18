@@ -71,3 +71,20 @@ img{
     margin-top: 0px;
     margin-bottom: 10px;
 }
+
+.edit-btn {
+    background-color: #26961c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+.edit-btn:hover {
+    background-color: #1d7c17;
+}
