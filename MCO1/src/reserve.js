@@ -128,4 +128,5 @@ document.getElementById("submitSelection").addEventListener("click", () => {
     };
 
     document.getElementById("jsonOutput").textContent = JSON.stringify(reservationData, null, 2);
+    alert("Reservation data has been generated. Check the JSON output below.");
 });
