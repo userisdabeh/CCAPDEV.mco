@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>Login GokoLab</title>
-        <link rel="stylesheet" href="styles/index.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-        <script src="src/index.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Login GokoLab</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="src/index.js" defer></script>
+</head>
 
-    <body>
-        <div class="main">
-            <form action="">
-                <h1>GokoLab</h1>
-                <div class="input-box">
-                    <input type="email" placeholder="DLSU Email" required>
-                    <i class="bi bi-envelope-fill"></i>
-                </div>
+<body>
+    <div class="main">
+        <form onsubmit="return loginUser(event)">
+            <h1>GokoLab</h1>
 
-                <div class="input-box">
-                    <input type="password" placeholder="Password" id="password" required>
-                    <i class="bi bi-eye-slash-fill" id="eyeIcon" onclick="eyePass()"></i>
-                </div>
+            <div class="input-box">
+                <input type="email" id="email" placeholder="DLSU Email" required>
+                <i class="bi bi-envelope-fill"></i>
+            </div>
 
-                <div class="remember-forgot">
-                    <label><input type="checkbox">Remember me </label>
-                    <a href="forgot_pass.html">Forgot password?</a>
-                </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="bi bi-eye-slash-fill" id="eyeIcon" onclick="eyePass()"></i>
+            </div>
 
-                <button type="submit" class="btn">Login</button>
+            <div class="remember-forgot">
+                <label><input type="checkbox">Remember me </label>
+                <a href="forgot_pass.html">Forgot password?</a>
+            </div>
 
-                <div class="register-link">
-                    <p>Don't have an account? 
-                        <a href="register.html">Register</a></p>
-                </div>
-            </form>
+            <button type="submit" class="btn">Login</button>
 
-        </div>
-    </body>
+            <div class="register-link">
+                <p>Don't have an account? 
+                    <a href="register.html">Register</a></p>
+            </div>
+        </form>
+    </div>
+</body>
 </html>
