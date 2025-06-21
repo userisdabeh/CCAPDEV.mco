@@ -18,6 +18,7 @@ npm install
 - express-handlebars
 - mongoose
 - bcrypt
+- body-parser
 
 ## Running the application
 - Open command prompt and go the the project parent folder.
