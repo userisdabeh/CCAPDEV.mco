@@ -1,0 +1,132 @@
+[
+  {
+    "labID": 1001, 
+    "labName": "A1706", 
+    "labSlots": 45 
+  },
+  {
+    "labID": 1002, 
+    "labName": "A1904", 
+    "labSlots": 45 
+  },
+  { 
+    "labID": 1003, 
+    "labName": "C314", 
+    "labSlots": 35 
+  },
+  { 
+    "labID": 1004, 
+    "labName": "G210", 
+    "labSlots": 30 
+  },
+  { 
+    "labID": 1005, 
+    "labName": "G211", 
+    "labSlots": 30 
+  },
+  { 
+    "labID": 1006, 
+    "labName": "G302A", 
+    "labSlots": 24 
+  },
+  { 
+    "labID": 1007, 
+    "labName": "G302B", 
+    "labSlots": 24 
+  },
+  { 
+    "labID": 1008, 
+    "labName": "G304A", 
+    "labSlots": 24 
+  },
+  { 
+    "labID": 1009, 
+    "labName": "G304B", 
+    "labSlots": 45 
+  },
+  { 
+    "labID": 1010, 
+    "labName": "G306A", 
+    "labSlots": 24 
+  },
+  { 
+    "labID": 1011, 
+    "labName": "G306B", 
+    "labSlots": 24 
+  },
+  { 
+    "labID": 1012, 
+    "labName": "G404A", 
+    "labSlots": 30 
+  },
+  { 
+    "labID": 1013, 
+    "labName": "G404B", 
+    "labSlots": 30 
+  },
+  { 
+    "labID": 1014, 
+    "labName": "J212", 
+    "labSlots": 20 
+  },
+  { 
+    "labID": 1015, 
+    "labName": "L212", 
+    "labSlots": 18 
+  },
+  { 
+    "labID": 1016, 
+    "labName": "L229", 
+    "labSlots": 48 
+  },
+  { 
+    "labID": 1017, 
+    "labName": "L320", 
+    "labSlots": 39 
+  },
+  { 
+    "labID": 1018, 
+    "labName": "L335", 
+    "labSlots": 44 
+  },
+  { 
+    "labID": 1019, 
+    "labName": "V103", 
+    "labSlots": 29 
+  },
+  { 
+    "labID": 1020, 
+    "labName": "V205", 
+    "labSlots": 24 
+  },
+  { 
+    "labID": 1021, 
+    "labName": "V206", 
+    "labSlots": 24 
+  },
+  { 
+    "labID": 1022, 
+    "labName": "V208A", 
+    "labSlots": 22 
+  },
+  { 
+    "labID": 1023, 
+    "labName": "V208B", 
+    "labSlots": 22 
+  },
+  { 
+    "labID": 1024, 
+    "labName": "V301", 
+    "labSlots": 35 
+  },
+  { 
+    "labID": 1025, 
+    "labName": "V310", 
+    "labSlots": 28 
+  },
+  { 
+    "labID": 1026, 
+    "labName": "Y602", 
+    "labSlots": 41 
+  }
+]
