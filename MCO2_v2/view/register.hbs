@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Register GokoLab</title>
+        <link rel="stylesheet" href="/styles/register.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <script src="/src/register.js"></script>
+    </head>
+
+    <body>
+        <div class="main-register">
+            <form action="/register" method="post" id="registerForm">
+                <h1>Create Account</h1>
+                <div class="user-btn">
+                    <div id="btn"></div>
+                    <button type="button" class="toggle-btn" onclick="userBtn()">Student</button>
+                    <button type="button" class="toggle-btn" onclick="userBtn()">Technician</button>
+                </div>
+                <div class="two-forms">
+                    <div class="input-box form-control">
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                    <small>Error message</small>
+                    </div>
+
+                    <div class="input-box form-control">
+                        <input type="text" id="lastName" placeholder="Last Name" required>
+                        <small>Error message</small>
+                    </div>
+                </div>
+                <div class="input-box form-control">
+                    <input type="email" id="email" placeholder="DLSU Email" required>
+                    <small>Error message</small>
+                </div>
+
+                <div class="input-box form-control">
+                    <input type="password" id="password" placeholder="Password" required>
+                    <small>Error message</small>
+                </div>
+
+                <div class="input-box form-control">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                    <small>Error message</small>
+                </div>
+
+                <div class="terms form-control">
+                    <label><input type="checkbox" id="terms">Agree to terms & Conditions </label>
+                    <small>Error message</small>
+                </div>
+
+                <button type="submit" class="btn">Register</button>
+
+                <div class="login-register">
+                    <p>Already have an account? 
+                        <a href="/login" class="login-link">Log In</a></p>
+
+                        <div id="formMessage" class="msg"></div>
+                </div>
+            </form>
+
+        </div>
+    </body>
+</html>

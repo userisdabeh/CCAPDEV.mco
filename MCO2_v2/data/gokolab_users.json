@@ -1,0 +1,30 @@
+[
+    {
+        "userID": 1,
+        "firstName": "Dave Anthony",
+        "lastName": "Gagala",
+        "email": "dave_gagala@dlsu.edu.ph",
+        "password": "$2a$12$QVWwFBTOxhcMfo0KILIO0O/zuma0jSa5E252a19yfAzB2dxz6jCO."
+    },
+    {
+        "userID": 2,
+        "firstName": "Enzo Miguel",
+        "lastName": "Abanes",
+        "email": "enzo_abanes@dlsu.edu.ph",
+        "password": "$2a$12$QVWwFBTOxhcMfo0KILIO0O/zuma0jSa5E252a19yfAzB2dxz6jCO."
+    },
+    {
+        "userID": 3,
+        "firstName": "Althea Kaitlin",
+        "lastName": "Brillantes",
+        "email": "althea_kaitlin_brillantes@dlsu.edu.ph",
+        "password": "$2a$12$QVWwFBTOxhcMfo0KILIO0O/zuma0jSa5E252a19yfAzB2dxz6jCO."
+    },
+    {
+        "userID": 4,
+        "firstName": "Jullian Gabriel",
+        "lastName": "Cruz",
+        "email": "jullian_cruz@dlsu.edu.ph",
+        "password": "$2a$12$QVWwFBTOxhcMfo0KILIO0O/zuma0jSa5E252a19yfAzB2dxz6jCO."
+    }
+]

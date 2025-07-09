@@ -1,0 +1,111 @@
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.quick--actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.summary--card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1 1 calc(30% - 16px);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid darkgreen;
+}
+
+.card--text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.reservations--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.reservations--table {
+    width: 100%;
+    border-collapse: collapse;
+
+    & thead {
+        background-color: #f3f3f3;
+        color: #666666;
+    }
+}
+
+.list--header {
+    padding: 12px;
+    width: 100%;
+}
+
+.delete-reservation-icon {
+    fill: black;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.table-container {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #f3f3f3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+    padding: 18px;
+    
+}
+
+.reservation-data td {
+    border-bottom: 1px solid #CCCCCC;
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.action-btn {
+    width: 20px;
+    height: 20px;
+    fill: black;
+    display: block;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 12px;
+    margin: 0;
+    height: 100%;
+}
+
+tbody {
+    & tr {
+    text-align: center;
+    }
+
+    & tr:last-child td {
+        border-bottom: none;
+    }
+}
