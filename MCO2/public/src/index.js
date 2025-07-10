@@ -10,36 +10,35 @@ function eyePass() {
         eyeIcon.className = "bi bi-eye-slash-fill";
     }
 }
-function loginUser(event) {
-    event.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+const loginForm = document.getElementById("loginForm");
 
-    if (email === "johndoe@dlsu.edu.ph") {
-        return loginRegularUser(password);
-    } else if (email === "juandelacruz@dlsutech.edu.ph") {
-        return loginTechUser(password);
-    } else {
-        alert("Email not recognized.");
-        return false;
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent the default form submission
+
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    console.log("Email:", emailInput.value.trim());
+    console.log("Password:", passwordInput.value.trim());
+
+    // Validate email
+    if (!validateEmail(emailInput.value.trim())) {
+        document.getElementById('email-error').innerText = "Please enter a valid DLSU email address.";
     }
+
+    // Validate password
+    if (!validatePassword(passwordInput.value.trim())) {
+        document.getElementById('password-error').innerText = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.";
+    }
+});
+
+function validateEmail(email) {
+    const re = /^[a-z]+([._][a-z]+)*@dlsu\.edu\.ph$/i;
+    return re.test(email.trim());
 }
 
-function loginRegularUser(password) {
-    if (password === "1234") {
-        window.location.href = "dashboard.html";
-    } else {
-        alert("Incorrect password for regular user.");
-    }
-    return false;
-}
-
-function loginTechUser(password) {
-    if (password === "1234") {
-        window.location.href = "tech_dashboard.html";
-    } else {
-        alert("Incorrect password for tech user.");
-    }
-    return false;
+function validatePassword(password) {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    return re.test(password.trim());
 }
