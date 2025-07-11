@@ -76,7 +76,7 @@ router.post('/forgot', async (req, res) => {
         console.log('Password updated successfully for user:', user.email);
         
         // Redirect to login page with success message
-        res.redirect('/?message=Password updated successfully');
+        res.redirect('/');
     } catch (error) {
         console.error('Error updating password:', error);
         res.render('forgot', {
