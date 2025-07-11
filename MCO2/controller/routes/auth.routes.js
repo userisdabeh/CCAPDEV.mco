@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../model/user.model.js');
+const User = require('../../model/user.model.js');
 
 router.get('/', (req, res) => {
     res.render('login', {
@@ -39,6 +39,15 @@ router.post('/login', async (req, res) => {
             errors: {password: 'Incorrect password'}
         });
     }
+
+    req.session.user = {
+        _id: isExistingEmail._id,
+        email: isExistingEmail.email,
+        firstName: isExistingEmail.firstName,
+        lastName: isExistingEmail.lastName
+    }
+
+    console.log('User logged in successfully:', req.session.user);
 
     console.log('User logged in successfully:', isExistingEmail);
     res.redirect(`/student/dashboard/${isExistingEmail._id}`);
@@ -119,6 +128,15 @@ router.post('/register', async (req, res) => {
         console.error('Error saving user:', error);
         return res.status(500).json({ success: false, message: 'Registration failed' });
     }
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error('Error destroying session:', err);
+        }
+    });
+    res.redirect('/');
 });
 
 module.exports = router;

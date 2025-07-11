@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DB_URI = 'mongodb://localhost:27017/gokolab';
+const DB_URI = process.env.MONGODB_URI;
 
 const connectDB = async () => {
     try {

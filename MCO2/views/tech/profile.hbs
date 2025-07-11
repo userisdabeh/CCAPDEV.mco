@@ -1,0 +1,51 @@
+<main>
+<div class="flex-row">
+        <!-- Profile Picture and Basic Info -->
+        <div class="info-box">
+            <div>
+                <img src="assets/icons/default_profile.jpg" alt="User Profile" class="center">
+                <button class="edit-btn center" onclick="enableEdit()">Edit Profile</button>
+                <br><br>
+            </div>
+
+            <form>
+                <label>Full Name:</label><br>
+                <input type="text" value="Juan De La Cruz" disabled><br><br>
+
+                <label>Email:</label><br>
+                <input type="email" value="juan.technician@gokolab.com" disabled><br><br>
+
+                <label>Phone Number:</label><br>
+                <input type="text" value="+63 912 345 6789" disabled><br><br>
+
+                <label>Technician ID:</label><br>
+                <input type="text" value="TECH-0925" disabled><br><br>
+
+                <label>Specialty:</label><br>
+                <input type="text" value="Lab Equipment Calibration & Maintenance" disabled><br><br>
+
+                <label>Years of Service:</label><br>
+                <input type="text" value="5 Years" disabled><br><br>
+            </form>
+        </div>
+
+        <!-- About Me and Reservation Placeholder -->
+        <div class="flex-col">
+            <div class="other-ibox">
+                <label>About Me</label><br>
+                <textarea id="abtMe" name="abtMe" rows="6" cols="50" disabled>
+                Dedicated lab technician with 5 years of experience in maintaining and calibrating sensitive laboratory equipment. Committed to ensuring operational efficiency and safety in all lab environments. Passionate about precision, reliability, and teamwork.
+                </textarea>
+            </div>
+
+            <div class="other-ibox">
+                <label>Current Assignments</label><br>
+                <p style="font-size: 16px; margin-top: 10px;">
+                    • Scheduled Maintenance - Chemistry Lab (June 20, 2025)<br>
+                    • Equipment Check - Physics Lab (June 22, 2025)<br>
+                    • Safety Audit Prep - BioTech Wing (June 25, 2025)
+                </p>
+            </div>
+        </div>
+    </div>
+</main>

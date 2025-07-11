@@ -18,6 +18,15 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    aboutMe: {
+        type: String,
+        default: null
+    },
+    type: {
+        enum: ['student', 'admin'],
+        default: 'student',
+        type: String
     }
 }, {
     timestamps: true,
