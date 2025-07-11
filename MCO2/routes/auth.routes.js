@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => {
     }
 
     console.log('User logged in successfully:', isExistingEmail);
-    res.redirect('/student/dashboard');
+    res.redirect(`/student/dashboard/${isExistingEmail._id}`);
 });
 
 router.get('/forgot', (req, res) => {
