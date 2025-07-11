@@ -32,7 +32,7 @@ loginForm.addEventListener('submit', async (e) => {
 
     // Validate password
     if (!validatePassword(passwordInput.value.trim())) {
-        document.getElementById('password-error-frontend').innerText = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.";
+        document.getElementById('password-error-frontend').innerText = "Password must be at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.";
         errors++;
     }
 
@@ -41,8 +41,6 @@ loginForm.addEventListener('submit', async (e) => {
     } else {
         loginForm.submit(); // Submit the form if validation passes
     }
-
-   
 });
 
 function validateEmail(email) {
@@ -51,6 +49,6 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
     return re.test(password.trim());
 }

@@ -53,6 +53,42 @@ router.get('/forgot', (req, res) => {
     });
 });
 
+router.post('/forgot', async (req, res) => {
+    const formData = req.body;
+    console.log('Forgot Password Data:', formData);
+    
+    // Check if user exists
+    const user = await User.findOne({ email: formData.email });
+    if (!user) {
+        return res.render('forgot', {
+            layout: 'main',
+            title: 'Forgot Password',
+            stylesheets: ['forgot_pass.css'],
+            scripts: ['forgot_pass.js'],
+            error: 'Email not found in our system'
+        });
+    }
+    
+    // Update user's password
+    try {
+        user.password = await user.hashPassword(formData.password);
+        await user.save();
+        console.log('Password updated successfully for user:', user.email);
+        
+        // Redirect to login page with success message
+        res.redirect('/?message=Password updated successfully');
+    } catch (error) {
+        console.error('Error updating password:', error);
+        res.render('forgot', {
+            layout: 'main',
+            title: 'Forgot Password',
+            stylesheets: ['forgot_pass.css'],
+            scripts: ['forgot_pass.js'],
+            error: 'Failed to update password. Please try again.'
+        });
+    }
+});
+
 router.get('/register', (req, res) => {
     res.render('register', {
         layout: 'main',

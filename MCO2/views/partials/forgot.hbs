@@ -1,26 +1,31 @@
 <div class="main-forgot">
-    <form id="passwordForm" novalidate>
+    <form id="passwordForm" action="/forgot" method="POST" novalidate>
         <div class="back">
             <a href="/" class="backToMain" > <i class="bi bi-arrow-bar-left"></i>Back</a>
         </div>
         
-        <form action="">
-            <h1>Forgot Password</h1>
-            <div class="input-box form-control">
-                <input type="email" id="email"  placeholder="DLSU Email" required>
-                <small>Error message</small>
+        <h1>Forgot Password</h1>
+        
+        {{#if error}}
+            <div class="error-message" style="color: #e74c3c; text-align: center; margin-bottom: 20px; padding: 10px; background: rgba(231, 76, 60, 0.1); border-radius: 5px;">
+                {{error}}
             </div>
+        {{/if}}
+        
+        <div class="input-box form-control">
+            <input type="email" name="email" id="email" placeholder="DLSU Email" required>
+            <small>Error message</small>
+        </div>
 
-            <div class="input-box form-control">
-                <input type="password" id="password" placeholder="Password" required>
-                <small>Error message</small>
-            </div>
+        <div class="input-box form-control">
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <small>Error message</small>
+        </div>
 
-            <div class="input-box form-control">
-                <input type="password"  id="confirmPassword" placeholder="Confirm Password" required>
-                <small>Error message</small>
-            </div>
-            <button type="submit" class="btn">Reset Password</button>
-        </form>
+        <div class="input-box form-control">
+            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
+            <small>Error message</small>
+        </div>
+        <button type="submit" class="btn">Reset Password</button>
     </form>
 </div>

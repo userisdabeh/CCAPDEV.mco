@@ -13,6 +13,12 @@ const connectDB = require('./config/db.js');
 // Import the User Schema
 const User = require('./model/user.model.js');
 
+// Import the Room Schema
+const Room = require('./model/room.model.js');
+
+// Import the Reservation Schema
+const Reservation = require('./model/reservation.model.js');
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
