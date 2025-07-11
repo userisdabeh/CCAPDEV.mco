@@ -3,7 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>GokoLab Student Portal</title>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="../../public/styles/student.css">
+        {{#if stylesheets}}
+            {{#each stylesheets}}
+                <link rel="stylesheet" href="/styles/{{this}}">
+            {{/each}}
+        {{/if}}
+        {{#if scripts}}
+            {{#each scripts}}
+                <script src="/src/{{this}}" defer></script>
+            {{/each}}
+        {{/if}}
     </head>
     <body>
         <header>

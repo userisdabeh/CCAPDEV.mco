@@ -35,6 +35,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use('/', require('./routes/auth.routes.js'));
+app.use('/', require('./routes/student.routes.js'));
 
 connectDB()
     .then(data=> {
