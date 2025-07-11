@@ -1,5 +1,5 @@
 <div class="main-register">
-    <form id="registerForm" novalidate>
+    <form id="registerForm" method="POST" action="/register" novalidate>
         <h1>Create Account</h1>
         <div class="user-btn">
             <div id="btn"></div>
@@ -8,32 +8,32 @@
         </div>
         <div class="two-forms">
             <div class="input-box form-control">
-            <input type="text" id="firstName" placeholder="First Name" required>
+            <input type="text" name="firstName" id="firstName" placeholder="First Name" required>
             <small>Error message</small>
             </div>
 
             <div class="input-box form-control">
-                <input type="text" id="lastName" placeholder="Last Name" required>
+                <input type="text" name="lastName" id="lastName" placeholder="Last Name" required>
                 <small>Error message</small>
             </div>
         </div>
         <div class="input-box form-control">
-            <input type="email" id="email" placeholder="DLSU Email" required>
+            <input type="email" name="email" id="email" placeholder="DLSU Email" required>
             <small>Error message</small>
         </div>
 
         <div class="input-box form-control">
-            <input type="password" id="password" placeholder="Password" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
             <small>Error message</small>
         </div>
 
         <div class="input-box form-control">
-            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
             <small>Error message</small>
         </div>
 
         <div class="terms form-control">
-            <label><input type="checkbox" id="terms">Agree to terms & Conditions </label>
+            <label><input type="checkbox" name="terms" id="terms">Agree to terms & Conditions </label>
             <small>Error message</small>
         </div>
 

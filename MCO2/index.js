@@ -16,7 +16,7 @@ const User = require('./model/user.model.js');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// For CSS
+// For CSS and JS files
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine('hbs', exphbs.engine({
