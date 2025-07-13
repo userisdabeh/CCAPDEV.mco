@@ -21,12 +21,16 @@ const userSchema = new mongoose.Schema({
     },
     aboutMe: {
         type: String,
-        default: null
+        default: 'No bio yet.'
     },
     type: {
-        enum: ['student', 'admin'],
-        default: 'student',
-        type: String
+        type: String,
+        enum: ['STUDENT', 'ADMIN'],
+        default: 'STUDENT'
+    },
+    profilePicture: {
+        type: String,
+        default: 'https://res.cloudinary.com/davgly7hd/image/upload/v1752317177/default_profile_exl9yv.jpg'
     }
 }, {
     timestamps: true,
