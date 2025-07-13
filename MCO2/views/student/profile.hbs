@@ -10,24 +10,27 @@
                     </div>
                 </div>
                 <i class="bi bi-pencil-square edit-btn" title="Edit Profile"></i>
-                <div class="edit-profile-form" style="display:none; margin-top: 1em;">
-                   <form action="/student/update-profile/{{user._id}}" method="POST" enctype="multipart/form-data">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" name="firstName" value="{{user.firstName}}" required>
+                <div class="edit-profile-form" style="display:none;">
+                    <form action="/student/update-profile/{{user._id}}" method="POST" enctype="multipart/form-data">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" name="firstName" value="{{user.firstName}}" required>
 
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" name="lastName" value="{{user.lastName}}" required>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" name="lastName" value="{{user.lastName}}" required>
 
-                        <label for="email">Email:</label>
-                        <input type="email" name="email" value="{{user.email}}" required>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" value="{{user.email}}" required>
 
-                        <label for="aboutMe">Bio:</label>
-                        <textarea name="aboutMe">{{user.aboutMe}}</textarea>
+                    <label for="aboutMe">Bio:</label>
+                    <textarea name="aboutMe">{{user.aboutMe}}</textarea>
 
-                        <label for="profilePicture">Profile Picture:</label>
-                        <input type="file" name="profilePicture" accept="image/*">
+                    <label for="profilePicture">Profile Picture:</label>
+                    <input type="file" name="profilePicture" accept="image/*">
 
-                        <button type="submit">Save Changes</button>
+                    <label for="password">New Password (leave blank to keep current):</label>
+                    <input type="password" name="password" placeholder="••••••••">
+
+                    <button type="submit">Save Changes</button>
                     </form>
                 </div>
             </div>
