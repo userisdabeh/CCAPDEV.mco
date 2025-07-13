@@ -41,8 +41,8 @@ main{
     gap: 24px;
     padding: 20px;
     border-right: 1px solid #cccccc;
-    max-width: 35%;
-    min-width: 35%;
+    width: 35%;
+    flex: 0 0 35%;
     height: 100%;
 }
 
