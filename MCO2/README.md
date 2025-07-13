@@ -19,6 +19,8 @@ npm install
 - mongoose
 - bcrypt
 - body-parser
+- dotenv
+- cookie-parser
 
 ## Running the application
 - Open command prompt and go the the project parent folder.
