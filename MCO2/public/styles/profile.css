@@ -130,3 +130,26 @@ main{
 .edit-profile-form button:hover {
     background-color: #0056b3;
 }
+
+.delete-account-form {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;         
+    margin-top: -12px;
+    margin-bottom: 20px;
+}
+
+.delete-btn {
+    background-color: #ffe5e5;
+    color: #cc0000;
+    border: 1px solid #cc0000;
+    padding: 10px 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+    margin-top: 320px;
+}
