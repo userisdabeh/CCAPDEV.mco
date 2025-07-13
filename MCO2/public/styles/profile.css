@@ -41,7 +41,8 @@ main{
     gap: 24px;
     padding: 20px;
     border-right: 1px solid #cccccc;
-    width: 35%;
+    max-width: 35%;
+    min-width: 35%;
     height: 100%;
 }
 

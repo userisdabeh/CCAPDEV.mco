@@ -4,8 +4,15 @@ const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const multer = require('multer');
+const dayjs = require('dayjs');
 
 const app = express();
+
+// Configure dayjs
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 // Load environment variables
 require('dotenv').config();
@@ -59,7 +66,16 @@ app.engine('hbs', exphbs.engine({
     extname: 'hbs',
     defaultLayout: 'main',
     layoutsDir: path.join(__dirname, 'views', 'layouts'),
-    partialsDir: path.join(__dirname, 'views', 'partials')
+    partialsDir: path.join(__dirname, 'views', 'partials'),
+    helpers: {
+        eq: (a, b) => a === b,
+        formatDate: (date) => {
+            return dayjs(date).tz('Asia/Manila').format('MMM D, YYYY');
+        },
+        formatTime: (date) => {
+            return dayjs(date).tz('Asia/Manila').format('h:mm A');
+        }
+    }
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
