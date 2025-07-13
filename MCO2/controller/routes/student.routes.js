@@ -129,12 +129,12 @@ router.post('/student/update-profile/:id', upload.single('profilePicture'), asyn
         user.email = email;
         user.aboutMe = aboutMe;
 
-        // hashing and updating
+        // Hash and update password if provided
         if (password && password.trim() !== '') {
             user.password = await user.hashPassword(password);
         }
 
-        // new prof pic
+        // Update profile picture path if new image uploaded
         if (req.file) {
             user.profilePicture = `/uploads/${req.file.filename}`;
         }
@@ -144,6 +144,25 @@ router.post('/student/update-profile/:id', upload.single('profilePicture'), asyn
     } catch (err) {
         console.error('Profile update error:', err);
         res.status(500).send('Failed to update profile');
+    }
+});
+
+router.post('/student/delete-account/:id', async (req, res) => {
+    try {
+        const userID = req.params.id;
+
+        // Delete reservations linked to user
+        await Reservation.deleteMany({ userID });
+
+        // Delete user
+        await User.findByIdAndDelete(userID);
+
+        // Optionally destroy session or clear cookies here
+
+        res.redirect('/'); // or to login screen
+    } catch (err) {
+        console.error('Error deleting account:', err);
+        res.status(500).send('Failed to delete account');
     }
 });
 
