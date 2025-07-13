@@ -43,8 +43,15 @@
                 <h4>Bio</h4>
                 <p>{{user.aboutMe}}</p>
             </div>
+             <form action="/student/delete-account/{{user._id}}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">
+            <button type="submit" class="delete-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff4444">
+            <path d="M261-120q-29 0-49.5-20.5T191-190v-560h-31v-60h200v-30h240v30h200v60h-31v560q0 29-20.5 49.5T699-120H261Zm438-610H261v560h438v-560ZM359-240h60v-360h-60v360Zm182 0h60v-360h-60v360ZM261-730v560-560Z"/>
+            </svg>
+            <p>Delete Account</p>
+            </button>
+            </form>
         </div>
-
         <div class="reservations-box">
             <h2>My Reservations</h2>
             <div class="table-container">
