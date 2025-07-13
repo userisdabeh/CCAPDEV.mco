@@ -8,6 +8,10 @@ const dayjs = require('dayjs');
 
 const app = express();
 
+//remember-me login
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 // Configure dayjs
 const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
