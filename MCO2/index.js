@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const multer = require('multer');
 
 const app = express();
 
@@ -15,13 +16,9 @@ const port = 3000;
 // Imports the database connection function
 const connectDB = require('./controller/config/db.js');
 
-// Import the User Schema
+// Import the Schemas
 const User = require('./model/user.model.js');
-
-// Import the Room Schema
 const Room = require('./model/room.model.js');
-
-// Import the Reservation Schema
 const Reservation = require('./model/reservation.model.js');
 
 // Import Routes
@@ -30,6 +27,9 @@ const studentRoutes = require('./controller/routes/student.routes.js');
 
 // Import Middleware
 const isAuthenticated = require('./controller/middleware/auth.js');
+
+// Import Cloudinary
+const cloudinary = require('./controller/config/cloudinary.config.js');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -48,6 +48,9 @@ app.use(session({
     }
 }));
 
+// Multer configuration
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 // For CSS and JS files
 app.use(express.static(path.join(__dirname, 'public')));
