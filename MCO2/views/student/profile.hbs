@@ -20,5 +20,38 @@
                 <p>{{user.aboutMe}}</p>
             </div>
         </div>
+        <div class="reservations-box">
+            <h2>My Reservations</h2>
+            <div class="table-container">
+                <table class="reservations--table">
+                    <thead>
+                        <tr>
+                            <th class="table-header">Seat</th>
+                            <th class="table-header">Laboratory Room</th>
+                            <th class="table-header">Date</th>
+                            <th class="table-header">Time</th>
+                            <th class="table-header">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#if reservationCount}}
+                            {{#each reservations}}
+                                <tr class="reservation-data">
+                                    <td>{{this.seat}}</td>
+                                    <td>{{this.roomID.roomName}}</td>
+                                    <td>{{this.reservationDate}}</td>
+                                    <td>{{this.startTime}} - {{this.endTime}}</td>
+                                    <td>{{this.status}}</td>
+                                </tr>
+                            {{/each}}
+                        {{else}}
+                            <tr class="reservation-data">
+                                <td colspan="5" class="no-reservations">No reservations found</td>
+                            </tr>
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </main>

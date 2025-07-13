@@ -10,6 +10,10 @@ const reservationSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    seat: {
+        type: String,
+        required: true
+    },
     startTime: {
         type: Date,
         required: true
@@ -23,7 +27,11 @@ const reservationSchema = new mongoose.Schema({
         ref: 'Room',
         required: true
     },
-    status: ['pending', 'confirmed', 'cancelled']
+    status: {
+        type: String,
+        enum: ['Pending', 'Confirmed', 'Cancelled'],
+        default: 'Pending'
+    }
 }, {
     timestamps: true,
     collection: 'reservations'

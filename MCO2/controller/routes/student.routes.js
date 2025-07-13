@@ -3,6 +3,7 @@ const router = express.Router();
 
 const User = require('../../model/user.model.js');
 const Room = require('../../model/room.model.js');
+const Reservation = require('../../model/reservation.model.js');
 
 function getNext7DatesExcludingSundays() {
     const dates = [];
@@ -81,12 +82,16 @@ router.get('/student/profile/:id', async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
+        const reservations = await Reservation.find({ userID: studentID }).populate('roomID').lean();
+
         res.render('student/profile', {
             layout: 'student',
             title: 'GoKoLab Student Dashboard - Profile',
-            stylesheets: ['profile.css'],
+            stylesheets: ['profile.css', 'dashboard.css'],
             scripts: ['student_profile.js'],
             user,
+            reservations,
+            reservationCount: reservations.length,
             activeProfile: true
         });
     } catch (error) {
