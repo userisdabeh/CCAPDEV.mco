@@ -1,0 +1,38 @@
+[{
+  "_id": {
+    "$oid": "68724586d60548784819732e"
+  },
+  "firstName": "Dave",
+  "lastName": "Gagala",
+  "email": "dave_gagala@dlsu.edu.ph",
+  "password": "$2b$10$14P8gk5myDyLoZsR2c6.y.R6iUVSL5Vfc0vfG5y/XSxiEXEH1Dwte",
+  "aboutMe": "No bio yet.",
+  "type": "STUDENT",
+  "profilePicture": "https://res.cloudinary.com/davgly7hd/image/upload/v1752317177/default_profile_exl9yv.jpg",
+  "createdAt": {
+    "$date": "2025-07-12T11:22:46.329Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-12T11:22:46.329Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687330562bceedee75e42fc6"
+  },
+  "firstName": "Macie",
+  "lastName": "Tarnate",
+  "email": "macie_tarnate@dlsu.edu.ph",
+  "password": "$2b$10$U8vsMQFFbP/99cdbHDjLnu5TghGgzCN4I5zjyZ25XkbZ9GAb5cvKa",
+  "aboutMe": "No bio yet.",
+  "type": "STUDENT",
+  "profilePicture": "https://res.cloudinary.com/davgly7hd/image/upload/v1752317177/default_profile_exl9yv.jpg",
+  "createdAt": {
+    "$date": "2025-07-13T04:04:38.189Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-13T04:04:38.189Z"
+  },
+  "__v": 0
+}]

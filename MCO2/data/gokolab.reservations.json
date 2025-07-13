@@ -1,0 +1,84 @@
+[{
+  "_id": {
+    "$oid": "687332067e67cf9e25992cf9"
+  },
+  "userID": {
+    "$oid": "68724586d60548784819732e"
+  },
+  "reservationDate": {
+    "$date": "2025-07-15T00:00:00.000Z"
+  },
+  "seat": "A1",
+  "startTime": {
+    "$date": "2025-07-15T09:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-07-15T11:00:00.000Z"
+  },
+  "roomID": {
+    "$oid": "6871050b0c51f0fea560c3aa"
+  },
+  "status": "Pending",
+  "createdAt": {
+    "$date": "2025-07-13T08:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-13T08:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687332067e67cf9e25992cfa"
+  },
+  "userID": {
+    "$oid": "68724586d60548784819732e"
+  },
+  "reservationDate": {
+    "$date": "2025-07-16T00:00:00.000Z"
+  },
+  "seat": "B3",
+  "startTime": {
+    "$date": "2025-07-16T13:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-07-16T15:00:00.000Z"
+  },
+  "roomID": {
+    "$oid": "687109a30c51f0fea560c3ab"
+  },
+  "status": "Confirmed",
+  "createdAt": {
+    "$date": "2025-07-13T08:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-13T09:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687332067e67cf9e25992cfb"
+  },
+  "userID": {
+    "$oid": "68724586d60548784819732e"
+  },
+  "reservationDate": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "seat": "C2",
+  "startTime": {
+    "$date": "2025-07-17T10:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-07-17T12:00:00.000Z"
+  },
+  "roomID": {
+    "$oid": "687109bb0c51f0fea560c3ac"
+  },
+  "status": "Cancelled",
+  "createdAt": {
+    "$date": "2025-07-13T09:15:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-13T09:20:00.000Z"
+  }
+}]

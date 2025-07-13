@@ -1,0 +1,128 @@
+[{
+  "_id": {
+    "$oid": "6871050b0c51f0fea560c3aa"
+  },
+  "roomName": "G210",
+  "roomSlots": 30,
+  "roomBuilding": "Gokongwei Building",
+  "roomStatus": "available",
+  "createdAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687109a30c51f0fea560c3ab"
+  },
+  "roomName": "G211",
+  "roomSlots": 30,
+  "roomBuilding": "Gokongwei Building",
+  "roomStatus": "available",
+  "createdAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687109bb0c51f0fea560c3ac"
+  },
+  "roomName": "G302A",
+  "roomSlots": 30,
+  "roomBuilding": "Gokongwei Building",
+  "roomStatus": "available",
+  "createdAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687109cb0c51f0fea560c3ad"
+  },
+  "roomName": "G302B",
+  "roomSlots": 30,
+  "roomBuilding": "Gokongwei Building",
+  "roomStatus": "available",
+  "createdAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687109de0c51f0fea560c3ae"
+  },
+  "roomName": "G304A",
+  "roomSlots": 30,
+  "roomBuilding": "Gokongwei Building",
+  "roomStatus": "unavailable",
+  "createdAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687109fb0c51f0fea560c3af"
+  },
+  "roomName": "G304B",
+  "roomSlots": 30,
+  "roomBuilding": "Gokongwei Building",
+  "roomStatus": "available",
+  "createdAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68710a010c51f0fea560c3b0"
+  },
+  "roomName": "G306A",
+  "roomSlots": 30,
+  "roomBuilding": "Gokongwei Building",
+  "roomStatus": "available",
+  "createdAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68710a060c51f0fea560c3b1"
+  },
+  "roomName": "G306B",
+  "roomSlots": 30,
+  "roomBuilding": "Gokongwei Building",
+  "roomStatus": "available",
+  "createdAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T06:30:00.000Z"
+  },
+  "__v": 0
+}]
