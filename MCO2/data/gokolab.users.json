@@ -19,20 +19,20 @@
 },
 {
   "_id": {
-    "$oid": "687330562bceedee75e42fc6"
+    "$oid": "6873796d7801053c50e16b7c"
   },
-  "firstName": "Macie",
-  "lastName": "Tarnate",
-  "email": "macie_tarnate@dlsu.edu.ph",
-  "password": "$2b$10$U8vsMQFFbP/99cdbHDjLnu5TghGgzCN4I5zjyZ25XkbZ9GAb5cvKa",
+  "firstName": "Lebron",
+  "lastName": "James",
+  "email": "lebron_james@dlsu.edu.ph",
+  "password": "$2b$10$l2Q4LqdfoalR8g6euskQAObvPsIU07WCrzrS1S9gDK/PC61Pxt0BK",
   "aboutMe": "No bio yet.",
   "type": "STUDENT",
   "profilePicture": "https://res.cloudinary.com/davgly7hd/image/upload/v1752317177/default_profile_exl9yv.jpg",
   "createdAt": {
-    "$date": "2025-07-13T04:04:38.189Z"
+    "$date": "2025-07-13T09:16:30.107Z"
   },
   "updatedAt": {
-    "$date": "2025-07-13T04:04:38.189Z"
+    "$date": "2025-07-13T09:16:30.107Z"
   },
   "__v": 0
 }]
