@@ -113,21 +113,33 @@ router.get('/student/profile/:id', async (req, res) => {
 router.post('/student/update-profile/:id', upload.single('profilePicture'), async (req, res) => {
     try {
         const userID = req.params.id;
-        const { firstName, lastName, email, aboutMe } = req.body;
-
-        const updateData = {
+        const {
             firstName,
             lastName,
             email,
-            aboutMe
-        };
+            aboutMe,
+            password
+        } = req.body;
 
-        // prof pic upload
-        if (req.file) {
-            updateData.profilePicture = `/uploads/${req.file.filename}`;
+        const user = await User.findById(userID);
+        if (!user) return res.status(404).send('User not found');
+
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+        user.aboutMe = aboutMe;
+
+        // hashing and updating
+        if (password && password.trim() !== '') {
+            user.password = await user.hashPassword(password);
         }
 
-        await User.findByIdAndUpdate(userID, updateData, { new: true });
+        // new prof pic
+        if (req.file) {
+            user.profilePicture = `/uploads/${req.file.filename}`;
+        }
+
+        await user.save();
         res.redirect(`/student/profile/${userID}`);
     } catch (err) {
         console.error('Profile update error:', err);
