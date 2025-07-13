@@ -1,39 +1,24 @@
 <main>
     <div class="flex-row">
         <div class="info-box">
-            <div >
-                <img src="assets/icons/default_profile.jpg" alt="User Profile" class="center">
-                <button class="edit-btn center" onclick="enableEdit()">Edit Profile</button>
-                <br><br>
+            <div class="main-info">
+                <div class="info-left">
+                    <img src="{{user.profilePicture}}" alt="{{user.firstName}} {{user.lastName}}'s Profile Picture" class="img-profile">
+                    <div class="info-text">
+                        <h3>{{user.firstName}} {{user.lastName}}</h3>
+                        <p>{{user.type}}</p>
+                    </div>
+                </div>
+                <i class="bi bi-pencil-square edit-btn" title="Edit Profile"></i>
             </div>
-            
-            <div> <!-- full name display-->
-                <form> 
-                    <label>Full Name:</label><br>
-                    <p>{{user.firstName}} {{user.lastName}}</p><br><br>
-                </form>
+            <div class="account-info">
+                <h4>About</h4>
+                <p>Email: {{user.email}}</p>
             </div>
-
-            <div> <!-- email display-->
-                <form> 
-                    <label>Email:</label> <br>
-                    <p>{{user.email}}</p><br><br>
-                </form>
-            </div>
-
-        </div> <!--end of pfp col -->
-
-        <div class="flex-col"> <!--abt me box-->
-            <div class="other-ibox">
-                <label>About Me</label> <br>
+            <div class="about-info">
+                <h4>Bio</h4>
                 <p>{{user.aboutMe}}</p>
             </div>
-
-            <div class="other-ibox">
-                <label>Current Reservation/s</label><br>
-            </div>
-
-        </div> <!--abt me box end-->
-
-    </div> <!--flex column-->
+        </div>
+    </div>
 </main>

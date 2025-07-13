@@ -47,6 +47,13 @@ header {
     object-fit: cover;
 }
 
+.img-profile {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 nav {
     width: 15%;
     height: calc(100vh - calc(5% + 30px));

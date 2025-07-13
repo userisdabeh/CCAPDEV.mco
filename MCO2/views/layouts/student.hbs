@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{title}}</title>
         <link rel="stylesheet" href="/styles/student.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
         {{#if stylesheets}}
             {{#each stylesheets}}
                 <link rel="stylesheet" href="/styles/{{this}}">
@@ -23,7 +24,7 @@
                 <h4>GoKoLab Student Portal</h4>
             </div>
             <div class="user--info">
-                <img src="assets/icons/default_profile.jpg" alt="User Profile" class="img-circle">
+                <img src="{{user.profilePicture}}" alt="User Profile" class="img-circle">
                 <p id="username">{{user.firstName}} {{user.lastName}}</p>   
             </div>
         </header>
