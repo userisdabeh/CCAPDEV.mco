@@ -3,7 +3,32 @@ const router = express.Router();
 
 const User = require('../../model/user.model.js');
 
-router.get('/', (req, res) => {
+REMEMBER_MAX_AGE =  1000 * 60 * 60 * 24 * 21, //3 weeks
+
+router.get('/', async (req, res) => {
+    if (!req.session.User && req.cookies.remember){
+        try {
+            const isExistingEmail= await User.findById(req.cookies.remember);
+            if (isExistingEmail) {
+                req.session.isExistingEmail = {
+                    _id: isExistingEmail._id,
+                    email: isExistingEmail.email,
+                    firstName: isExistingEmail.firstName,
+                    lastName: isExistingEmail.lastName
+                };
+
+            // Refresh cookie
+                res.cookie('remember', isExistingEmail._id.toString(), {
+                    maxAge: REMEMBER_MAX_AGE,
+                    httpOnly: true
+                });
+
+            return res.redirect(`/student/dashboard/${isExistingEmail._id}`);
+            }
+        } catch (err) {
+            console.error('Invalid remember cookie:', err);
+        }
+    }
     res.render('login', {
         layout: 'main',
         title: 'Welcome to GokoLab',
@@ -47,10 +72,20 @@ router.post('/login', async (req, res) => {
         lastName: isExistingEmail.lastName
     }
 
+    //if choose remember me
+    if (formData.remember === 'on') {
+        res.cookie('remember', isExistingEmail._id.toString(), {
+            maxAge: REMEMBER_MAX_AGE,
+            httpOnly: true
+        });
+    }
+
     console.log('User logged in successfully:', req.session.user);
 
     console.log('User logged in successfully:', isExistingEmail);
     res.redirect(`/student/dashboard/${isExistingEmail._id}`);
+
+    //res.redirect(`/student/dashboard/${user._id}`);
 });
 
 router.get('/forgot', (req, res) => {
@@ -131,6 +166,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
+    res.clearCookie('remember');
     req.session.destroy(err => {
         if (err) {
             console.error('Error destroying session:', err);
