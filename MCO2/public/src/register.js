@@ -1,16 +1,9 @@
-
-function userBtn(){
+function setUserType(type) {
     const btn = document.getElementById('btn');
-    const studentBtn = document.querySelectorAll('.toggle-btn')[0];
-    const techBtn = document.querySelectorAll('.toggle-btn')[1];
+    const userTypeInput = document.getElementById('userType');
 
-    studentBtn.addEventListener('click', () => {
-        btn.style.left = '0';
-    });
-
-    techBtn.addEventListener('click', () => {
-        btn.style.left = '160px';
-    });
+    userTypeInput.value = type;
+    btn.style.left = type === 'student' ? '0' : '160px';
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -28,75 +21,75 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
         const terms = form.terms;
+        const type = form.type.value;
 
         const errors = [];
 
         // Validation
         if (!/^[a-zA-Z]{3,}$/.test(firstName)) {
-        showError('firstName', 'First name must be at least 3 letters');
-        errors.push('First name must be at least 3 letters');
+            showError('firstName', 'First name must be at least 3 letters');
+            errors.push('First name must be at least 3 letters');
         }
 
         if (!/^[a-zA-Z]{3,}$/.test(lastName)) {
-        showError('lastName', 'Last name must be at least 3 letters');
-        errors.push('Last name must be at least 3 letters');
+            showError('lastName', 'Last name must be at least 3 letters');
+            errors.push('Last name must be at least 3 letters');
         }
 
         if (!/^[a-zA-Z0-9._%+-]+@dlsu\.edu\.ph$/.test(email)) {
-        showError('email', 'Enter a valid DLSU email');
-        errors.push('Enter a valid DLSU email');
+            showError('email', 'Enter a valid DLSU email');
+            errors.push('Enter a valid DLSU email');
         }
 
         if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/.test(password)) {
-        showError('password', 'Password must be at least 6 characters and include uppercase, lowercase, number, and special character.');
-        errors.push('Password must be at least 6 characters and include uppercase, lowercase, number, and special character.');
+            showError('password', 'Password must be at least 6 characters and include uppercase, lowercase, number, and special character.');
+            errors.push('Password must be at least 6 characters and include uppercase, lowercase, number, and special character.');
         }
 
         if (password !== confirmPassword) {
-        showError('confirmPassword', 'Passwords do not match.');
-        errors.push('Passwords do not match.');
+            showError('confirmPassword', 'Passwords do not match.');
+            errors.push('Passwords do not match.');
         }
-        
+
         if (!terms.checked) {
-        showError('terms', "You must agree to the terms");
-        errors.push("You must agree to the terms");
+            showError('terms', "You must agree to the terms");
+            errors.push("You must agree to the terms");
         }
 
         if (errors.length > 0) {
-        message.innerHTML = `<div class="error">${errors.join('<br>')}</div>`;
+            message.innerHTML = `<div class="error">${errors.join('<br>')}</div>`;
         } else {
-        message.innerHTML = `<div class="success">Registration successful!</div>`;
-        
-        const formData = {
-            firstName,
-            lastName,
-            email,
-            password,
-            confirmPassword,
-            terms: terms.checked
-        };
-        console.log('Form Data:', formData);
+            message.innerHTML = `<div class="success">Registering...</div>`;
 
-        await fetch('/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                firstName, lastName, email, password, confirmPassword
-            })
-        }).then(res => res.json()).then(data => {
-            if (data.success) {
-                message.innerHTML = `<div class="success">Registration Successful</div>`;
-            } else {
-                message.innerHTML = '<div class="error">Something went wrong. Please try again.</div>';
-            }
-        }).catch(err => {
-            console.error('Error:', err);
-            message.innerHTML = '<div class="error">An error occurred while processing your request.</div>';
-        });
-        
-        form.reset();
+            const formData = {
+                firstName,
+                lastName,
+                email,
+                password,
+                confirmPassword,
+                type
+            };
+
+            console.log('Form Data:', formData);
+
+            await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).then(res => res.json()).then(data => {
+                if (data.success) {
+                    message.innerHTML = `<div class="success">Registration Successful</div>`;
+                } else {
+                    message.innerHTML = `<div class="error">${data.message || 'Something went wrong. Please try again.'}</div>`;
+                }
+            }).catch(err => {
+                console.error('Error:', err);
+                message.innerHTML = '<div class="error">An error occurred while processing your request.</div>';
+            });
+
+            form.reset();
         }
     });
 
@@ -121,5 +114,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
 });
