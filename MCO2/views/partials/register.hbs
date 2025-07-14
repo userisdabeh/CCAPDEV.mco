@@ -3,13 +3,15 @@
         <h1>Create Account</h1>
         <div class="user-btn">
             <div id="btn"></div>
-            <button type="button" class="toggle-btn" onclick="userBtn()">Student</button>
-            <button type="button" class="toggle-btn" onclick="userBtn()">Technician</button>
+            <button type="button" class="toggle-btn" onclick="setUserType('student')">Student</button>
+            <button type="button" class="toggle-btn" onclick="setUserType('technician')">Technician</button>
         </div>
+        <input type="hidden" name="type" id="userType" value="student" />
+
         <div class="two-forms">
             <div class="input-box form-control">
-            <input type="text" name="firstName" id="firstName" placeholder="First Name" required>
-            <small>Error message</small>
+                <input type="text" name="firstName" id="firstName" placeholder="First Name" required>
+                <small>Error message</small>
             </div>
 
             <div class="input-box form-control">
@@ -17,6 +19,7 @@
                 <small>Error message</small>
             </div>
         </div>
+
         <div class="input-box form-control">
             <input type="email" name="email" id="email" placeholder="DLSU Email" required>
             <small>Error message</small>
@@ -33,7 +36,7 @@
         </div>
 
         <div class="terms form-control">
-            <label><input type="checkbox" name="terms" id="terms">Agree to terms & Conditions </label>
+            <label><input type="checkbox" name="terms" id="terms">Agree to terms & Conditions</label>
             <small>Error message</small>
         </div>
 
@@ -41,9 +44,9 @@
 
         <div class="login-register">
             <p>Already have an account? 
-                <a href="/" class="login-link">Log In</a></p>
-
-                <div id="formMessage" class="msg"></div>
+                <a href="/" class="login-link">Log In</a>
+            </p>
+            <div id="formMessage" class="msg"></div>
         </div>
     </form>
 </div>
