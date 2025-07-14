@@ -145,9 +145,9 @@ router.post('/tech/delete-account/:id', async (req, res) => {
 router.get('/tech/search', (req, res) => {
     res.render('tech/search', {
         layout: 'tech',
-        title: 'Search tech Profile',
-        stylesheets: ['dashboard.css'],
-        activeOtherProfile: true,
+        title: 'Search User Profile',
+        stylesheets: ['search.css', 'dashboard.css'],
+        activeSearch: true,
         user: req.session.user
     });
 });
@@ -157,38 +157,36 @@ router.post('/tech/search', async (req, res) => {
     const { email } = req.body;
 
     try {
-        // Use a regex for partial, case-insensitive matching:
         const users = await User.find({ email: { $regex: email, $options: 'i' } }).lean();
 
+        const renderData = {
+            layout: 'tech',
+            title: 'Search User Profile',
+            stylesheets: ['search.css', 'dashboard.css'],
+            activeSearch: true,
+            user: req.session.user
+        };
+
         if (!users || users.length === 0) {
-            return res.render('tech/search', {
-                layout: 'tech',
-                title: 'Search tech Profile',
-                error: 'No users found.',
-                activeOtherProfile: true,
-                user: req.session.user
-            });
+            renderData.error = 'No users found.';
+        } else {
+            renderData.searchResults = users;
         }
 
-        // Render the search page with results:
-        res.render('tech/search', {
-            layout: 'tech',
-            title: 'Search tech Profile',
-            searchResults: users,
-            activeOtherProfile: true,
-            user: req.session.user
-        });
+        res.render('tech/search', renderData);
     } catch (error) {
         console.error('Search error:', error);
         res.render('tech/search', {
             layout: 'tech',
-            title: 'Search tech Profile',
+            title: 'Search User Profile',
             error: 'Something went wrong.',
-            activeOtherProfile: true,
+            stylesheets: ['search.css', 'dashboard.css'],
+            activeSearch: true,
             user: req.session.user
         });
     }
 });
+
 
 router.get('/tech/otherprofile/:id', async (req, res) => {
     const id = req.params.id;
@@ -206,18 +204,19 @@ router.get('/tech/otherprofile/:id', async (req, res) => {
         res.render('tech/otherprofile', {
             layout: 'tech',
             title: `Profile of ${profileUser.firstName}`,
-            stylesheets: ['profile.css', 'dashboard.css'],
+            stylesheets: ['profile.css', 'search.css', 'dashboard.css'],
             scripts: ['tech_profile.js'],
             profileUser, // searched user
             user: req.session.user, // logged-in user
             reservations,
             reservationCount: reservations.length,
-            activeOtherProfile: true
+            activeSearch: true
         });
     } catch (err) {
         console.error('Error loading other profile:', err);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 module.exports = router;

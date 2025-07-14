@@ -6,7 +6,7 @@
         <p class="error-msg">{{error}}</p>
     {{/if}}
 
-    <form action="/student/search" method="POST">
+    <form action="/tech/search" method="POST">
         <input type="text" name="email" placeholder="Enter user name or email" required>
         <button type="submit">Search</button>
     </form>
@@ -17,7 +17,7 @@
             <ul>
                 {{#each searchResults}}
                     <li>
-                        <a href="/student/otherprofile/{{this._id}}">
+                        <a href="/tech/otherprofile/{{this._id}}">
                             {{this.firstName}} {{this.lastName}} - {{this.email}}
                         </a>
                     </li>
@@ -27,4 +27,3 @@
     {{/if}}
     </div>
 </main>
-

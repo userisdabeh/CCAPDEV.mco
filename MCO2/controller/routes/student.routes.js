@@ -169,7 +169,7 @@ router.post('/student/delete-account/:id', async (req, res) => {
 router.get('/student/search', (req, res) => {
     res.render('student/search', {
         layout: 'student',
-        title: 'Search Students Profile',
+        title: 'Search User Profile',
         stylesheets: ['search.css', 'dashboard.css'],
         activeSearch: true,
         user: req.session.user
@@ -185,7 +185,7 @@ router.post('/student/search', async (req, res) => {
 
         const renderData = {
             layout: 'student',
-            title: 'Search Student Profile',
+            title: 'Search User Profile',
             stylesheets: ['search.css', 'dashboard.css'],
             activeSearch: true,
             user: req.session.user
@@ -202,7 +202,7 @@ router.post('/student/search', async (req, res) => {
         console.error('Search error:', error);
         res.render('student/search', {
             layout: 'student',
-            title: 'Search Student Profile',
+            title: 'Search User Profile',
             error: 'Something went wrong.',
             stylesheets: ['search.css', 'dashboard.css'],
             activeSearch: true,
