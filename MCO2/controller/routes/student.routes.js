@@ -129,12 +129,12 @@ router.post('/student/update-profile/:id', upload.single('profilePicture'), asyn
         user.email = email;
         user.aboutMe = aboutMe;
 
-        // hashing and updating
+        // Hash and update password if provided
         if (password && password.trim() !== '') {
             user.password = await user.hashPassword(password);
         }
 
-        // new prof pic
+        // Update profile picture path if new image uploaded
         if (req.file) {
             user.profilePicture = `/uploads/${req.file.filename}`;
         }
@@ -171,7 +171,7 @@ router.get('/student/search', (req, res) => {
         layout: 'student',
         title: 'Search Student Profile',
         stylesheets: ['dashboard.css'],
-        activeSearch: true,
+        activeOtherProfile: true,
         user: req.session.user
     });
 });
@@ -189,7 +189,7 @@ router.post('/student/search', async (req, res) => {
                 layout: 'student',
                 title: 'Search Student Profile',
                 error: 'No users found.',
-                activeSearch: true,
+                activeOtherProfile: true,
                 user: req.session.user
             });
         }
@@ -199,7 +199,7 @@ router.post('/student/search', async (req, res) => {
             layout: 'student',
             title: 'Search Student Profile',
             searchResults: users,
-            activeSearch: true,
+            activeOtherProfile: true,
             user: req.session.user
         });
     } catch (error) {
@@ -243,5 +243,6 @@ router.get('/student/otherprofile/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 module.exports = router;

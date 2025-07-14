@@ -25,8 +25,8 @@ const userSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['student', 'technician'],
-        default: 'student'
+        enum: ['STUDENT', 'ADMIN'],
+        default: 'STUDENT'
     },
     profilePicture: {
         type: String,

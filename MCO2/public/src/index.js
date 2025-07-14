@@ -43,7 +43,6 @@ loginForm.addEventListener('submit', async (e) => {
     }
 });
 
-
 function validateEmail(email) {
     const re = /^[a-z]+([._][a-z]+)*@dlsu\.edu\.ph$/i;
     return re.test(email.trim());

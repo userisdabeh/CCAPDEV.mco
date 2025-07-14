@@ -6,16 +6,15 @@ const User = require('../../model/user.model.js');
 REMEMBER_MAX_AGE =  1000 * 60 * 60 * 24 * 21, //3 weeks
 
 router.get('/', async (req, res) => {
-    if (!req.session.User && req.cookies.remember){
+    if (!req.session.user && req.cookies.remember){
         try {
             const isExistingEmail= await User.findById(req.cookies.remember);
             if (isExistingEmail) {
-                req.session.isExistingEmail = {
+                req.session.user = {
                     _id: isExistingEmail._id,
                     email: isExistingEmail.email,
                     firstName: isExistingEmail.firstName,
-                    lastName: isExistingEmail.lastName,
-                    type: isExistingEmail.type
+                    lastName: isExistingEmail.lastName
                 };
 
             // Refresh cookie
@@ -23,13 +22,8 @@ router.get('/', async (req, res) => {
                     maxAge: REMEMBER_MAX_AGE,
                     httpOnly: true
                 });
-            
-            //Redirects user based on type of user
-            if (isExistingEmail.type === 'technician') {
-                    return res.redirect(`/tech/dashboard/${isExistingEmail._id}`);
-                } else {
-                    return res.redirect(`/student/dashboard/${isExistingEmail._id}`);
-                }
+
+            return res.redirect(`/student/dashboard/${isExistingEmail._id}`);
             }
         } catch (err) {
             console.error('Invalid remember cookie:', err);
@@ -71,12 +65,13 @@ router.post('/login', async (req, res) => {
         });
     }
 
+    console.log('Password validation successful');
+
     req.session.user = {
         _id: isExistingEmail._id,
         email: isExistingEmail.email,
         firstName: isExistingEmail.firstName,
-        lastName: isExistingEmail.lastName,
-        type: isExistingEmail.type
+        lastName: isExistingEmail.lastName
     }
 
     //if choose remember me
@@ -90,15 +85,17 @@ router.post('/login', async (req, res) => {
 
     console.log('User logged in successfully:', req.session.user);
 
-    console.log('User logged in successfully:', isExistingEmail);
-    //res.redirect(`/student/dashboard/${isExistingEmail._id}`);
-     if (isExistingEmail.type === 'technician') {
-        return res.redirect(`/tech/dashboard/${isExistingEmail._id}`);
-    } else {
-        return res.redirect(`/student/dashboard/${isExistingEmail._id}`);
-    }
+    // Save session before redirect
+    req.session.save((err) => {
+        if (err) {
+            console.error('Session save error:', err);
+            return res.status(500).send('Login failed');
+        }
+        console.log('User logged in successfully:', isExistingEmail);
+        res.redirect(`/student/dashboard/${isExistingEmail._id}`);
+    });
 
-
+    //res.redirect(`/student/dashboard/${user._id}`);
 });
 
 router.get('/forgot', (req, res) => {
