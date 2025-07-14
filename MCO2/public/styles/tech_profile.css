@@ -1,29 +1,29 @@
 * {
-    box-sizing:border-box;
-    font-family: sans-serif; 
-    margin:0;
-    padding:0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-body.admin{
-    display:flex;
-    justify-content:center;
+body.admin {
+    display: flex;
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
 
-img{
+img {
     height: 100px;
     width: 100px;
 }
 
-.center{
-    display:block;
+.center {
+    display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-.main{
+.main {
     color: #26961c;
     border-radius: 10px;
     margin-top: 60px;
@@ -31,16 +31,19 @@ img{
     padding: 24px;
 }
 
-.info-box{
+.info-box {
     width: 100%;
     height: 100%;
     border: 1px solid rgb(103, 103, 103);
     border-radius: 10px;
     padding: 20px 45px 20px 20px;
     max-width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.other-ibox{
+.other-ibox {
     width: 100%;
     height: 100%;
     border: 1px solid rgb(103, 103, 103);
@@ -51,6 +54,7 @@ img{
 .flex-row {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     border-radius: 10px;
     width: 100%;
 }
@@ -64,28 +68,60 @@ img{
     flex-direction: column;
     background-color: rgb(255, 255, 255);
     justify-content: center;
+    flex: 1;
 }
 
 .flex-col > div {
-    background-color:rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     font-size: 30px;
     margin-top: 0px;
     margin-bottom: 10px;
+}
+
+.bio-box {
+    width: 100%;
+    max-width: 58%;
+    border: 1px solid rgb(103, 103, 103);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.edit-btn,
+.save-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    display: block;
+    margin: 15px auto 0 auto;
+    transition: background-color 0.3s ease;
+    width: 150px;
+    text-align: center;
 }
 
 .edit-btn {
     background-color: #26961c;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-    display: block;
-    margin: 0 auto;
 }
 
 .edit-btn:hover {
     background-color: #1d7c17;
+}
+
+.save-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    display: none;
+}
+
+.save-btn:hover {
+    background-color: #0056b3;
+}
+
+input[disabled],
+textarea[disabled] {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
 }
