@@ -1,55 +1,54 @@
 <div class="flex-row">
-        <!-- Profile Picture and Basic Info -->
-        <div class="info-box">
+    <div class="info-box">
+        <form id="profileForm" method="POST" action="/tech/update-profile/{{user._id}}" enctype="multipart/form-data">
             <div>
-                <img src="{{user.profilePicture}}" alt="User Profile" class="center">
+                <img src="{{user.profilePicture}}" alt="User Profile" class="center" id="previewImage">
                 <br>
+                <input type="file" name="profilePicture" id="profilePictureInput" accept="image/*" disabled>
             </div>
 
-            <form id="profileForm" method="post" action="/tech/update-profile/{{user._id}}">
-                <button type="button" class="edit-btn center" id="editProfileBtn">Edit Profile</button><br>
+            <button type="button" class="edit-btn center" id="editProfileBtn">Edit Profile</button>
+            <button type="submit" class="save-btn center" id="saveProfileBtn" style="display:none;">Save Changes</button><br>
 
-                <label>First Name:</label><br>
-                <input type="text" id="firstName" name="firstName" value="{{user.firstName}}" disabled><br><br>
+            <label>First Name:</label><br>
+            <input type="text" id="firstName" name="firstName" value="{{user.firstName}}" disabled><br><br>
 
-                <label>Last Name:</label><br>
-                <input type="text" id="lastName" name="lastName" value="{{user.lastName}}" disabled><br><br>
+            <label>Last Name:</label><br>
+            <input type="text" id="lastName" name="lastName" value="{{user.lastName}}" disabled><br><br>
 
-                <label>Email:</label><br>
-                <input type="email" id="email" name="email" value="{{user.email}}" disabled><br><br>
+            <label>Email:</label><br>
+            <input type="email" id="email" name="email" value="{{user.email}}" disabled><br><br>
 
-                <label>Phone Number:</label><br>
-                <input type="text" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}" disabled><br><br>
+            <label>Phone Number:</label><br>
+            <input type="text" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}" disabled><br><br>
 
-                <label>Technician ID:</label><br>
-                <input type="text" id="technicianID" name="technicianID" value="{{user._id}}" disabled><br><br>
+            <label>Technician ID:</label><br>
+            <input type="text" id="technicianID" name="technicianID" value="{{user._id}}" disabled><br><br>
 
-                <label>Specialty:</label><br>
-                <input type="text" id="specialty" name="specialty" value="{{user.specialty}}" disabled><br><br>
+            <label>Specialty:</label><br>
+            <input type="text" id="specialty" name="specialty" value="{{user.specialty}}" disabled><br><br>
 
-                <label>Years of Service:</label><br>
-                <input type="text" id="yearsOfService" name="yearsOfService" value="{{yearsOfService}} Years" disabled><br><br>
-            </form>
-        </div>
+            <label>Years of Service:</label><br>
+            <input type="text" id="yearsOfService" name="yearsOfService" value="{{yearsOfService}} Years" disabled><br><br>
 
-        <!-- About Me and Reservation Placeholder -->
-        <div class="flex-col">
-            <div class="other-ibox">
-                <label>About Me</label><br>
-                <textarea id="aboutMe" name="aboutMe" rows="6" cols="50" disabled>{{user.aboutMe}}</textarea>
-            </div>
+            <label>About Me:</label><br>
+            <textarea id="aboutMe" name="aboutMe" rows="6" cols="50" disabled>{{user.aboutMe}}</textarea>
+        </form>
+    </div>
 
-            <div class="other-ibox">
-                <label>Current Assignments</label><br>
-                {{#if taskCount}}
-                    <ul>
-                        {{#each user.tasks}}
-                            <li>{{this.title}} - {{this.status}} ({{formatDate this.due}})</li>
-                        {{/each}}
-                    </ul>
-                {{else}}
-                    <p>No tasks assigned yet.</p>
-                {{/if}}
-            </div>
+    <!-- Current Assignments -->
+    <div class="flex-col">
+        <div class="other-ibox">
+            <label>Current Assignments</label><br>
+            {{#if taskCount}}
+                <ul>
+                    {{#each user.tasks}}
+                        <li>{{this.title}} - {{this.status}} ({{formatDate this.due}})</li>
+                    {{/each}}
+                </ul>
+            {{else}}
+                <p>No tasks assigned yet.</p>
+            {{/if}}
         </div>
     </div>
+</div>
