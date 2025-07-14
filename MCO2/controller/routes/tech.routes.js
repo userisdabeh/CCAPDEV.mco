@@ -23,6 +23,16 @@ router.get('/tech/dashboard/:id', async (req, res) => {
         }
 
         const reservations = await Reservation.find().populate('userID roomID').lean();
+        
+        // Count all slots in all rooms
+        const rooms = await Room.find().lean();
+        const totalSlots = rooms.reduce((sum, room) => sum + room.roomSlots, 0);
+
+        // Get all available labs
+        const availableLabs = await Room.find({ roomStatus: 'available' }).lean();
+
+        // Get all under maintenance labs
+        const underMaintenanceLabs = await Room.find({ roomStatus: 'maintenance' }).lean();
 
         res.render('tech/dashboard', {
             layout: 'tech',
@@ -30,7 +40,10 @@ router.get('/tech/dashboard/:id', async (req, res) => {
             stylesheets: ['tech_dashboard.css'],
             user,
             reservations,
-            activeDashboard: true
+            activeDashboard: true,
+            totalSlots,
+            availableLabs,
+            underMaintenanceLabs
         });
     } catch (error) {
         console.error('Error loading technician dashboard:', error);
