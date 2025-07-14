@@ -171,7 +171,7 @@ router.get('/student/search', (req, res) => {
         layout: 'student',
         title: 'Search Student Profile',
         stylesheets: ['dashboard.css'],
-        activeOtherProfile: true,
+        activeSearch: true,
         user: req.session.user
     });
 });
@@ -189,7 +189,7 @@ router.post('/student/search', async (req, res) => {
                 layout: 'student',
                 title: 'Search Student Profile',
                 error: 'No users found.',
-                activeOtherProfile: true,
+                activeSearch: true,
                 user: req.session.user
             });
         }
@@ -199,7 +199,7 @@ router.post('/student/search', async (req, res) => {
             layout: 'student',
             title: 'Search Student Profile',
             searchResults: users,
-            activeOtherProfile: true,
+            activeSearch: true,
             user: req.session.user
         });
     } catch (error) {
@@ -208,7 +208,7 @@ router.post('/student/search', async (req, res) => {
             layout: 'student',
             title: 'Search Student Profile',
             error: 'Something went wrong.',
-            activeOtherProfile: true,
+            activeSearch: true,
             user: req.session.user
         });
     }
