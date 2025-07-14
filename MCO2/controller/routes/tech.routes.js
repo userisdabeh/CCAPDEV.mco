@@ -23,15 +23,11 @@ router.get('/tech/dashboard/:id', async (req, res) => {
         }
 
         const reservations = await Reservation.find().populate('userID roomID').lean();
-        
-        // Count all slots in all rooms
+
         const rooms = await Room.find().lean();
         const totalSlots = rooms.reduce((sum, room) => sum + room.roomSlots, 0);
 
-        // Get all available labs
         const availableLabs = await Room.find({ roomStatus: 'available' }).lean();
-
-        // Get all under maintenance labs
         const underMaintenanceLabs = await Room.find({ roomStatus: 'maintenance' }).lean();
 
         res.render('tech/dashboard', {
@@ -82,8 +78,6 @@ router.get('/tech/profile/:id', async (req, res) => {
 
         const yearsOfService = new Date().getFullYear() - new Date(user.createdAt).getFullYear();
 
-        console.log(user.tasks);
-
         res.render('tech/profile', {
             layout: 'tech',
             title: 'Technician Profile',
@@ -91,7 +85,7 @@ router.get('/tech/profile/:id', async (req, res) => {
             scripts: ['tech_profile.js'],
             user,
             activeProfile: true,
-            taskCount: user.tasks.length,
+            taskCount: user.tasks?.length || 0,
             yearsOfService
         });
     } catch (err) {
@@ -100,10 +94,10 @@ router.get('/tech/profile/:id', async (req, res) => {
     }
 });
 
-router.post('/tech/update-profile/:id', async (req, res) => {
+router.post('/tech/update-profile/:id', upload.single('profilePicture'), async (req, res) => {
     try {
         const technicianID = req.params.id;
-        const { firstName, lastName, phoneNumber, specialty } = req.body;
+        const { firstName, lastName, phoneNumber, specialty, aboutMe } = req.body;
 
         const user = await User.findById(technicianID);
         if (!user || user.type !== 'technician') return res.status(403).send('Unauthorized');
@@ -112,8 +106,11 @@ router.post('/tech/update-profile/:id', async (req, res) => {
         user.lastName = lastName;
         user.phoneNumber = phoneNumber;
         user.specialty = specialty;
+        user.aboutMe = aboutMe;
 
-        console.log('user', user);
+        if (req.file) {
+            user.profilePicture = '/uploads/' + req.file.filename;
+        }
 
         await user.save();
         res.redirect(`/tech/profile/${technicianID}`);
@@ -126,16 +123,9 @@ router.post('/tech/update-profile/:id', async (req, res) => {
 router.post('/tech/delete-account/:id', async (req, res) => {
     try {
         const userID = req.params.id;
-
-        // Delete reservations linked to user
         await Reservation.deleteMany({ userID });
-
-        // Delete user
         await User.findByIdAndDelete(userID);
-
-        // Optionally destroy session or clear cookies here
-
-        res.redirect('/'); // or to login screen
+        res.redirect('/');
     } catch (err) {
         console.error('Error deleting account:', err);
         res.status(500).send('Failed to delete account');
@@ -151,7 +141,6 @@ router.get('/tech/search', (req, res) => {
         user: req.session.user
     });
 });
-
 
 router.post('/tech/search', async (req, res) => {
     const { email } = req.body;
@@ -187,12 +176,11 @@ router.post('/tech/search', async (req, res) => {
     }
 });
 
-
 router.get('/tech/otherprofile/:id', async (req, res) => {
     const id = req.params.id;
 
     try {
-        const profileUser = await User.findById(id).lean(); // searched user
+        const profileUser = await User.findById(id).lean();
         if (!profileUser) {
             return res.status(404).send('User not found.');
         }
@@ -206,8 +194,8 @@ router.get('/tech/otherprofile/:id', async (req, res) => {
             title: `Profile of ${profileUser.firstName}`,
             stylesheets: ['profile.css', 'search.css', 'dashboard.css'],
             scripts: ['tech_profile.js'],
-            profileUser, // searched user
-            user: req.session.user, // logged-in user
+            profileUser,
+            user: req.session.user,
             reservations,
             reservationCount: reservations.length,
             activeSearch: true
@@ -217,6 +205,5 @@ router.get('/tech/otherprofile/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
 
 module.exports = router;
