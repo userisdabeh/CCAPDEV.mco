@@ -74,6 +74,7 @@ router.post('/login', async (req, res) => {
 
     //if choose remember me
     if (formData.remember === 'on') {
+        console.log('Remember me is on');
         res.cookie('remember', isExistingEmail._id.toString(), {
             maxAge: REMEMBER_MAX_AGE,
             httpOnly: true
