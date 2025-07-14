@@ -129,12 +129,12 @@ router.post('/student/update-profile/:id', upload.single('profilePicture'), asyn
         user.email = email;
         user.aboutMe = aboutMe;
 
-        // Hash and update password if provided
+        // hashing and updating
         if (password && password.trim() !== '') {
             user.password = await user.hashPassword(password);
         }
 
-        // Update profile picture path if new image uploaded
+        // new prof pic
         if (req.file) {
             user.profilePicture = `/uploads/${req.file.filename}`;
         }
@@ -243,6 +243,5 @@ router.get('/student/otherprofile/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
 
 module.exports = router;
