@@ -25,12 +25,37 @@ const userSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['student', 'student'],
+        enum: ['student', 'technician'],
         default: 'technician'
     },
     profilePicture: {
         type: String,
         default: 'https://res.cloudinary.com/davgly7hd/image/upload/v1752317177/default_profile_exl9yv.jpg'
+    },
+    phoneNumber: {
+        type: String,
+        default: 'No phone number yet.'
+    },
+    specialty: {
+        type: String,
+    },
+    tasks: {
+        type: [{
+            title: {
+                type: String,
+                required: true
+            },
+            labRoom: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Room',
+                required: true
+            },
+            due: {
+                type: Date,
+                default: Date.now
+            }
+        }],
+        default: []
     }
 }, {
     timestamps: true,

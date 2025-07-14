@@ -166,18 +166,25 @@ router.post('/student/delete-account/:id', async (req, res) => {
     }
 });
 
-router.get('/student/search', (req, res) => {
+router.get('/student/search', async (req, res) => {
+    const userID = req.session.user._id;
+
+    const user = await User.findById(userID).lean();
+
     res.render('student/search', {
         layout: 'student',
         title: 'Search Student Profile',
         stylesheets: ['dashboard.css'],
         activeSearch: true,
-        user: req.session.user
+        user
     });
 });
 
 
 router.post('/student/search', async (req, res) => {
+
+    const userID = req.session.user._id;
+    const user = await User.findById(userID).lean();
     const { email } = req.body;
 
     try {
@@ -200,7 +207,7 @@ router.post('/student/search', async (req, res) => {
             title: 'Search Student Profile',
             searchResults: users,
             activeSearch: true,
-            user: req.session.user
+            user
         });
     } catch (error) {
         console.error('Search error:', error);
@@ -215,6 +222,8 @@ router.post('/student/search', async (req, res) => {
 });
 
 router.get('/student/otherprofile/:id', async (req, res) => {
+    const userID = req.session.user._id;
+    const user = await User.findById(userID).lean();
     const id = req.params.id;
 
     try {
@@ -233,7 +242,7 @@ router.get('/student/otherprofile/:id', async (req, res) => {
             stylesheets: ['profile.css', 'dashboard.css'],
             scripts: ['student_profile.js'],
             profileUser, // searched user
-            user: req.session.user, // logged-in user
+            user,
             reservations,
             reservationCount: reservations.length,
             activeSearch: true

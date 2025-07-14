@@ -35,6 +35,7 @@ const Reservation = require('./model/reservation.model.js');
 // Import Routes
 const authRoutes = require('./controller/routes/auth.routes.js');
 const studentRoutes = require('./controller/routes/student.routes.js');
+const techRoutes = require('./controller/routes/tech.routes.js');
 
 // Import Middleware
 const isAuthenticated = require('./controller/middleware/auth.js');
@@ -87,6 +88,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use('/', authRoutes);
 app.use('/', isAuthenticated, studentRoutes);
+app.use('/', isAuthenticated, techRoutes);
 
 connectDB()
     .then(data=> {

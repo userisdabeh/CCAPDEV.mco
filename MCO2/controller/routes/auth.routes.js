@@ -65,13 +65,12 @@ router.post('/login', async (req, res) => {
         });
     }
 
-    console.log('Password validation successful');
-
     req.session.user = {
         _id: isExistingEmail._id,
         email: isExistingEmail.email,
         firstName: isExistingEmail.firstName,
-        lastName: isExistingEmail.lastName
+        lastName: isExistingEmail.lastName,
+        type: isExistingEmail.type
     }
 
     //if choose remember me
@@ -85,17 +84,13 @@ router.post('/login', async (req, res) => {
 
     console.log('User logged in successfully:', req.session.user);
 
-    // Save session before redirect
-    req.session.save((err) => {
-        if (err) {
-            console.error('Session save error:', err);
-            return res.status(500).send('Login failed');
-        }
-        console.log('User logged in successfully:', isExistingEmail);
-        res.redirect(`/student/dashboard/${isExistingEmail._id}`);
-    });
-
-    //res.redirect(`/student/dashboard/${user._id}`);
+    console.log('User logged in successfully:', isExistingEmail);
+    //res.redirect(`/student/dashboard/${isExistingEmail._id}`);
+     if (isExistingEmail.type === 'technician') {
+        return res.redirect(`/tech/dashboard/${isExistingEmail._id}`);
+    } else {
+        return res.redirect(`/student/dashboard/${isExistingEmail._id}`);
+    }
 });
 
 router.get('/forgot', (req, res) => {
