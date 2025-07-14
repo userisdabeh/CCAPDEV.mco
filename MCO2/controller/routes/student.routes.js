@@ -166,64 +166,53 @@ router.post('/student/delete-account/:id', async (req, res) => {
     }
 });
 
-router.get('/student/search', async (req, res) => {
-    const userID = req.session.user._id;
-
-    const user = await User.findById(userID).lean();
-
+router.get('/student/search', (req, res) => {
     res.render('student/search', {
         layout: 'student',
-        title: 'Search Student Profile',
-        stylesheets: ['dashboard.css'],
+        title: 'Search Students Profile',
+        stylesheets: ['search.css', 'dashboard.css'],
         activeSearch: true,
-        user
+        user: req.session.user
     });
 });
 
 
 router.post('/student/search', async (req, res) => {
-
-    const userID = req.session.user._id;
-    const user = await User.findById(userID).lean();
     const { email } = req.body;
 
     try {
-        // Use a regex for partial, case-insensitive matching:
         const users = await User.find({ email: { $regex: email, $options: 'i' } }).lean();
 
-        if (!users || users.length === 0) {
-            return res.render('student/search', {
-                layout: 'student',
-                title: 'Search Student Profile',
-                error: 'No users found.',
-                activeSearch: true,
-                user: req.session.user
-            });
-        }
-
-        // Render the search page with results:
-        res.render('student/search', {
+        const renderData = {
             layout: 'student',
             title: 'Search Student Profile',
-            searchResults: users,
+            stylesheets: ['search.css', 'dashboard.css'],
             activeSearch: true,
-            user
-        });
+            user: req.session.user
+        };
+
+        if (!users || users.length === 0) {
+            renderData.error = 'No users found.';
+        } else {
+            renderData.searchResults = users;
+        }
+
+        res.render('student/search', renderData);
     } catch (error) {
         console.error('Search error:', error);
         res.render('student/search', {
             layout: 'student',
             title: 'Search Student Profile',
             error: 'Something went wrong.',
+            stylesheets: ['search.css', 'dashboard.css'],
             activeSearch: true,
             user: req.session.user
         });
     }
 });
 
+
 router.get('/student/otherprofile/:id', async (req, res) => {
-    const userID = req.session.user._id;
-    const user = await User.findById(userID).lean();
     const id = req.params.id;
 
     try {
@@ -239,10 +228,10 @@ router.get('/student/otherprofile/:id', async (req, res) => {
         res.render('student/otherprofile', {
             layout: 'student',
             title: `Profile of ${profileUser.firstName}`,
-            stylesheets: ['profile.css', 'dashboard.css'],
+            stylesheets: ['profile.css', 'search.css', 'dashboard.css'],
             scripts: ['student_profile.js'],
             profileUser, // searched user
-            user,
+            user: req.session.user, // logged-in user
             reservations,
             reservationCount: reservations.length,
             activeSearch: true
@@ -252,6 +241,5 @@ router.get('/student/otherprofile/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
 
 module.exports = router;
