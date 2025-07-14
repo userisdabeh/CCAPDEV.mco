@@ -1,19 +1,24 @@
+function userBtn(role, btn) {
+    const btnSlider = document.getElementById('btn');
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    const typeInput = document.getElementById('type');
 
-function userBtn(){
-    const btn = document.getElementById('btn');
-    const studentBtn = document.querySelectorAll('.toggle-btn')[0];
-    const techBtn = document.querySelectorAll('.toggle-btn')[1];
+    // Move slider
+    btnSlider.style.left = (role === 'student') ? '0' : '160px';
 
-    studentBtn.addEventListener('click', () => {
-        btn.style.left = '0';
-    });
+    // Update the hidden input value
+    typeInput.value = role;
 
-    techBtn.addEventListener('click', () => {
-        btn.style.left = '160px';
-    });
+    // Active button highlight
+    toggleButtons.forEach(button => button.classList.remove('active'));
+    btn.classList.add('active');
 }
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
+    userBtn(); // Call it once DOM is ready
+
     const form = document.getElementById("registerForm");
     const message = document.getElementById('formMessage');
 
@@ -28,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
         const terms = form.terms;
+        const type = document.getElementById('type').value;
+
 
         const errors = [];
 
@@ -73,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
             email,
             password,
             confirmPassword,
+            type,
             terms: terms.checked
         };
         console.log('Form Data:', formData);
@@ -82,9 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                firstName, lastName, email, password, confirmPassword
-            })
+            body: JSON.stringify(formData)
         }).then(res => res.json()).then(data => {
             if (data.success) {
                 message.innerHTML = `<div class="success">Registration Successful</div>`;
