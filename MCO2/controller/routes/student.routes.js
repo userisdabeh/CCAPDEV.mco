@@ -208,7 +208,7 @@ router.post('/student/search', async (req, res) => {
             layout: 'student',
             title: 'Search Student Profile',
             error: 'Something went wrong.',
-            activeOtherProfile: true,
+            activeSearch: true,
             user: req.session.user
         });
     }
