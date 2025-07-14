@@ -1,0 +1,27 @@
+<main>
+    <div class="main-info"></div>
+    <h2>Search for Student Profile</h2>
+
+    {{#if error}}
+        <p class="error-msg">{{error}}</p>
+    {{/if}}
+
+    <form action="/student/search" method="POST">
+        <input type="text" name="email" placeholder="Enter student name or email" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {{#if searchResults}}
+        <h3>Search Results:</h3>
+        <ul>
+            {{#each searchResults}}
+                <li>
+                    <a href="/student/otherprofile/{{this._id}}">
+                        {{this.firstName}} {{this.lastName}} - {{this.email}}
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+</main>
+

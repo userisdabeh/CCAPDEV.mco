@@ -166,4 +166,83 @@ router.post('/student/delete-account/:id', async (req, res) => {
     }
 });
 
+router.get('/student/search', (req, res) => {
+    res.render('student/search', {
+        layout: 'student',
+        title: 'Search Student Profile',
+        stylesheets: ['dashboard.css'],
+        activeOtherProfile: true,
+        user: req.session.user
+    });
+});
+
+
+router.post('/student/search', async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        // Use a regex for partial, case-insensitive matching:
+        const users = await User.find({ email: { $regex: email, $options: 'i' } }).lean();
+
+        if (!users || users.length === 0) {
+            return res.render('student/search', {
+                layout: 'student',
+                title: 'Search Student Profile',
+                error: 'No users found.',
+                activeOtherProfile: true,
+                user: req.session.user
+            });
+        }
+
+        // Render the search page with results:
+        res.render('student/search', {
+            layout: 'student',
+            title: 'Search Student Profile',
+            searchResults: users,
+            activeOtherProfile: true,
+            user: req.session.user
+        });
+    } catch (error) {
+        console.error('Search error:', error);
+        res.render('student/search', {
+            layout: 'student',
+            title: 'Search Student Profile',
+            error: 'Something went wrong.',
+            activeOtherProfile: true,
+            user: req.session.user
+        });
+    }
+});
+
+router.get('/student/otherprofile/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const profileUser = await User.findById(id).lean(); // searched user
+        if (!profileUser) {
+            return res.status(404).send('User not found.');
+        }
+
+        const reservations = await Reservation.find({ userID: profileUser._id })
+            .populate('roomID')
+            .lean();
+
+        res.render('student/otherprofile', {
+            layout: 'student',
+            title: `Profile of ${profileUser.firstName}`,
+            stylesheets: ['profile.css', 'dashboard.css'],
+            scripts: ['student_profile.js'],
+            profileUser, // searched user
+            user: req.session.user, // logged-in user
+            reservations,
+            reservationCount: reservations.length,
+            activeOtherProfile: true
+        });
+    } catch (err) {
+        console.error('Error loading other profile:', err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 module.exports = router;
