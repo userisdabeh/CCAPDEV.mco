@@ -59,6 +59,7 @@ router.get('/tech/reserve/:id', async (req, res) => {
             layout: 'tech',
             title: 'Reservations',
             stylesheets: ['tech_reserve.css'],
+            scripts: ['reserve.js'],
             user,
             activeReserve: true
         });
