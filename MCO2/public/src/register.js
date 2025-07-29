@@ -66,8 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 lastName,
                 email,
                 password,
-                confirmPassword,
-                type
+                confirmPassword
             };
 
             console.log('Form Data:', formData);
