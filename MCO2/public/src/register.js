@@ -1,11 +1,3 @@
-function setUserType(type) {
-    const btn = document.getElementById('btn');
-    const userTypeInput = document.getElementById('userType');
-
-    userTypeInput.value = type;
-    btn.style.left = type === 'student' ? '0' : '160px';
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("registerForm");
     const message = document.getElementById('formMessage');
@@ -21,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
         const terms = form.terms;
-        const type = form.type.value;
 
         const errors = [];
 
