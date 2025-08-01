@@ -146,7 +146,6 @@ body{
     text-decoration: underline;
 }
 
-/*form control-validation*/
 .form-control small{
     visibility: hidden;
     position: relative;
@@ -156,4 +155,28 @@ body{
 
 .form-control.error input{
     border-color: #e74c3c;
+}
+
+.input-box {
+    position: relative;
+}
+
+.input-box input {
+    padding-right: 2.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.1rem;
+    user-select: none;
+}
+.toggle-password:focus {
+    outline: 2px solid #4d90fe;
+    border-radius: 4px;
 }
