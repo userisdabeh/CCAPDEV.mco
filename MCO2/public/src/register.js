@@ -2,6 +2,51 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("registerForm");
     const message = document.getElementById('formMessage');
 
+
+    function toggleVisibility(icon) {
+        const targetId = icon.dataset.target;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+
+        const isHidden = input.type === 'password';
+        input.type = isHidden ? 'text' : 'password';
+
+
+        icon.classList.toggle('bi-eye-fill', isHidden);
+        icon.classList.toggle('bi-eye-slash-fill', !isHidden);
+        icon.setAttribute('aria-label', isHidden ? `Hide ${targetId.replace(/([A-Z])/g, ' $1').toLowerCase()}` : `Show ${targetId.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+        icon.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+    }
+
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+        icon.addEventListener('click', () => toggleVisibility(icon));
+        icon.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleVisibility(icon);
+            }
+        });
+    });
+
+
+    const passwordInput = form.password;
+    const confirmInput = form.confirmPassword;
+    confirmInput.addEventListener('input', () => {
+        if (passwordInput.value !== confirmInput.value) {
+            showError('confirmPassword', 'Passwords do not match.');
+        } else {
+            // clear confirmPassword error if they match
+            const inputField = document.getElementById('confirmPassword');
+            const formControl = inputField.parentElement;
+            formControl.classList.remove('error');
+            const small = formControl.querySelector('small');
+            if (small) {
+                small.innerText = '';
+                small.style.visibility = 'hidden';
+            }
+        }
+    });
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         message.innerHTML = '';
@@ -89,8 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const small = formControl.querySelector('small');
 
         formControl.classList.add('error');
-        small.innerText = messageText;
-        small.style.visibility = 'visible';
+        if (small) {
+            small.innerText = messageText;
+            small.style.visibility = 'visible';
+        }
     }
 
     function clearErrors() {
