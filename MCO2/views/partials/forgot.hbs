@@ -17,14 +17,26 @@
             <small>Error message</small>
         </div>
 
-        <div class="input-box form-control">
-            <input type="password" name="password" id="password" placeholder="Password" required>
-            <small>Error message</small>
+        <div class="input-box form-control" style="position: relative;">
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <i class="bi bi-eye-slash-fill eye-toggle"
+            role="button"
+            tabindex="0"
+            aria-label="Show password"
+            aria-pressed="false"
+            data-target="password"></i>
+        <small>Error message</small>
         </div>
 
-        <div class="input-box form-control">
-            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
-            <small>Error message</small>
+        <div class="input-box form-control" style="position: relative;">
+        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
+        <i class="bi bi-eye-slash-fill eye-toggle"
+            role="button"
+            tabindex="0"
+            aria-label="Show confirm password"
+            aria-pressed="false"
+            data-target="confirmPassword"></i>
+        <small>Error message</small>
         </div>
         <button type="submit" class="btn">Reset Password</button>
     </form>
