@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../../model/user.model.js');
+const isDlsuEmail = (email) => /^[a-zA-Z0-9._%+-]+@dlsu\.edu\.ph$/.test(email);
+const isStrongPassword = (pw) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/.test(pw);
 
 REMEMBER_MAX_AGE =  1000 * 60 * 60 * 24 * 21, //3 weeks
 
@@ -93,6 +95,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// GET forgot password
 router.get('/forgot', (req, res) => {
     res.render('forgot', {
         layout: 'main',
@@ -103,37 +106,80 @@ router.get('/forgot', (req, res) => {
 });
 
 router.post('/forgot', async (req, res) => {
-    const formData = req.body;
-    console.log('Forgot Password Data:', formData);
-    
-    // Check if user exists
-    const user = await User.findOne({ email: formData.email });
-    if (!user) {
+    const { email = '', password = '', confirmPassword = '' } = req.body;
+    const normalizedEmail = email.trim().toLowerCase();
+    const wantsJson = req.xhr || req.headers.accept?.includes('application/json');
+
+    // Collect validation errors
+    const errors = {};
+
+    if (!isDlsuEmail(normalizedEmail)) {
+        errors.email = 'Enter a valid DLSU email';
+    }
+
+    if (!isStrongPassword(password)) {
+        errors.password = 'Password must be at least 6 characters and include uppercase, lowercase, number, and special character.';
+    }
+
+    if (password !== confirmPassword) {
+        errors.confirmPassword = 'Passwords do not match.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+        if (wantsJson) {
+            return res.status(400).json({
+                success: false,
+                message: 'Validation failed',
+                errors
+            });
+        }
         return res.render('forgot', {
             layout: 'main',
             title: 'Forgot Password',
             stylesheets: ['forgot_pass.css'],
             scripts: ['forgot_pass.js'],
-            error: 'Email not found in our system'
+            error: 'Please fix the errors below.',
+            errors
         });
     }
-    
-    // Update user's password
+
     try {
-        user.password = await user.hashPassword(formData.password);
+        const user = await User.findOne({ email: normalizedEmail });
+        if (!user) {
+            const msg = 'Email not found in our system';
+            if (wantsJson) {
+                return res.status(404).json({ success: false, message: msg });
+            }
+            return res.render('forgot', {
+                layout: 'main',
+                title: 'Forgot Password',
+                stylesheets: ['forgot_pass.css'],
+                scripts: ['forgot_pass.js'],
+                error: msg
+            });
+        }
+
+        // Update password
+        user.password = await user.hashPassword(password);
         await user.save();
         console.log('Password updated successfully for user:', user.email);
-        
-        // Redirect to login page with success message
-        res.redirect('/');
+
+        if (wantsJson) {
+        return res.json({ success: true, message: 'Password updated.' });
+        }
+        return res.redirect('/');
     } catch (error) {
         console.error('Error updating password:', error);
-        res.render('forgot', {
+        const msg = 'Failed to update password. Please try again.';
+        if (wantsJson) {
+            return res.status(500).json({ success: false, message: msg });
+        }
+        return res.render('forgot', {
             layout: 'main',
             title: 'Forgot Password',
             stylesheets: ['forgot_pass.css'],
             scripts: ['forgot_pass.js'],
-            error: 'Failed to update password. Please try again.'
+            error: msg
         });
     }
 });
