@@ -43,4 +43,9 @@ reservationSchema.index(
     { unique: true, name: 'unique_room_date_time' }
 );
 
+reservationSchema.index(
+    { userID: 1, reservationDate: 1, timeSlot: 1 },
+    { unique: true, name: 'unique_user_date_time' }
+);
+
 module.exports = mongoose.model('Reservation', reservationSchema);

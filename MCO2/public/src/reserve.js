@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('reserveForm');
   const messageEl = document.getElementById('formMessage');
+  let isSubmitting = false;
 
   function setMessage(text, type = 'info') {
     messageEl.textContent = text;
@@ -19,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     setMessage('');
+    if (isSubmitting) return;
+    
+    isSubmitting = true;
 
     const room = document.getElementById('roomSelect')?.value;
     const time = document.getElementById('timeSelect')?.value;

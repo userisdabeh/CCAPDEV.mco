@@ -117,6 +117,7 @@ router.post('/student/reserve/:id', async (req, res) => {
   }
 
   try {
+    
     const user = await User.findById(studentID);
     if (!user) {
       return res.status(404).json({ success: false, message: 'Student not found.' });
@@ -144,6 +145,16 @@ router.post('/student/reserve/:id', async (req, res) => {
       return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
     }
 
+    const maxReservations = roomDoc.roomSlots;
+    const existingReservationsCount = await Reservation.countDocuments({
+      roomID: roomDoc._id,
+      reservationDate,
+      timeSlot
+    });
+    if (existingReservationsCount >= maxReservations) {
+      return res.status(400).json({ success: false, message: 'That slot is already full.' });
+    }
+
     const reservation = new Reservation({
       roomID: roomDoc._id,
       reservationDate,
@@ -153,7 +164,26 @@ router.post('/student/reserve/:id', async (req, res) => {
       userID: studentID
     });
 
-    await reservation.save();
+    await reservation.save().catch(err => {
+        if (err.code === 11000) {
+            return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
+        }
+        throw err;
+    });
+
+    const totalReservations = await Reservation.countDocuments({
+        roomID: roomDoc._id,
+        reservationDate,
+        timeSlot
+    });
+
+    if (totalReservations > maxReservations) {
+        await Reservation.deleteOne({
+            _id: reservation._id
+        });
+
+        return res.status(400).json({ success: false, message: 'That slot is already full.' });
+    }
 
     return res.json({ success: true, reservation });
   } catch (err) {
