@@ -48,11 +48,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-<<<<<<< Updated upstream
-        cookie: {
-=======
     cookie: {
->>>>>>> Stashed changes
         secure: false, 
         sameSite: 'lax',
         maxAge: 1000 * 60 * 60 * 24 

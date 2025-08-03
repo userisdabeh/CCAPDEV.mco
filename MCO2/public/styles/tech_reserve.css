@@ -107,3 +107,12 @@ thead tr th:first-child {
 .selected {
     background-color: green;
 }
+
+#searchForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+}

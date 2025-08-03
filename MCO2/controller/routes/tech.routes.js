@@ -6,6 +6,7 @@ const multer = require('multer');
 const User = require('../../model/user.model.js');
 const Reservation = require('../../model/reservation.model.js');
 const Room = require('../../model/room.model.js');
+const Error = require('../../model/errors.model.js');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'public/uploads/'),
@@ -13,6 +14,21 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname))
 });
 const upload = multer({ storage });
+
+function getNext7DatesExcludingSundays() {
+    const dates = [];
+    let currentDate = new Date();
+
+    while (dates.length < 7) {
+        if (currentDate.getDay() !== 0) {
+            const formatted = currentDate.toISOString().split('T')[0];
+            dates.push(formatted);
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+}
 
 router.get('/tech/dashboard/:id', async (req, res) => {
     try {
@@ -100,17 +116,104 @@ router.get('/tech/reserve/:id', async (req, res) => {
             return res.status(403).send('Unauthorized');
         }
 
+        const rooms = await Room.find().lean();
+        const dates = getNext7DatesExcludingSundays();
+        const times = ['08:00-10:00', '10:00-12:00', '13:00-15:00', '15:00-17:00', '17:00-19:00'];
+        const users = await User.find().lean();
+
         res.render('tech/reserve', {
             layout: 'tech',
             title: 'Reservations',
             stylesheets: ['tech_reserve.css'],
-            scripts: ['reserve.js'],
+            scripts: ['tech_reserve.js'],
             user,
-            activeReserve: true
+            activeReserve: true,
+            rooms,
+            dates,
+            times,
+            users
         });
     } catch (error) {
         console.error('Error loading technician reservations:', error);
         res.status(500).send('Server Error');
+    }
+});
+
+router.post('/tech/reserve/:id', async (req, res) => {
+    const technicianID = req.params.id;
+    const {userID, room, date, time, anonymous, quantity} = req.body;
+
+    try {
+        const technician = await User.findById(technicianID);
+        if (!technician || technician.type !== 'technician') {
+            return res.status(403).send('Unauthorized');
+        }
+
+        console.log('here1');
+
+        if (!userID || !room || !date || !time || !quantity) {
+            return res.status(400).send('Missing required fields');
+        }
+
+        const roomDoc = await Room.findOne({ roomName: room });
+        if (!roomDoc) {
+            await Error.create({ errorMessage: `Invalid room selected: ${room}` });
+            return res.status(400).json({ success: false, message: 'Invalid room selected.' });
+        }
+
+        console.log('here2');
+
+        const reservationDate = new Date(date);
+        if (isNaN(reservationDate.getTime())) {
+            await Error.create({ errorMessage: `Invalid date: ${date}` });
+            return res.status(400).json({ success: false, message: 'Invalid date.' });
+        }
+
+        console.log('here3');
+
+        const existingCount = await Reservation.countDocuments({
+            roomID: roomDoc._id,
+            reservationDate,
+            timeSlot: time
+        });
+
+        console.log('here4');
+
+        const availableSlots = roomDoc.roomSlots - existingCount;
+
+        if (availableSlots <= 0) {
+            return res.status(400).json({ success: false, message: 'That slot is already full.' });
+        }
+
+        if (quantity > availableSlots) {
+            return res.status(400).json({ success: false, message: 'That slot does not have enough available slots.' });
+        }
+
+        console.log('here5');
+
+        const reservations = [];
+
+        console.log('here6');
+
+        const newReservation = new Reservation({
+            userID,
+            roomID: roomDoc._id,
+            reservationDate,
+            timeSlot: time,
+            name: technician.firstName + ' ' + technician.lastName,
+            anonymous: !!anonymous,
+            quantity: quantity
+        });
+
+        console.log('here7');
+
+        await newReservation.save();
+
+        console.log('here8');
+
+        return res.json({ success: true, reservation: newReservation });
+    } catch {
+        return res.status(500).send('Internal Server Error');
     }
 });
 
