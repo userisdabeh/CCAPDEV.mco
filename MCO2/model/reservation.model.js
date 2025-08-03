@@ -6,26 +6,26 @@ const reservationSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    reservationDate: {
-        type: Date,
-        required: true
-    },
-    seat: {
-        type: String,
-        required: true
-    },
-    startTime: {
-        type: Date,
-        required: true
-    },
-    endTime: {
-        type: Date,
-        required: true
-    },
     roomID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room',
         required: true
+    },
+    reservationDate: {
+        type: Date,
+        required: true
+    },
+    timeSlot: {
+        type: String, // e.g., "08:00-10:00"
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    anonymous: {
+        type: Boolean,
+        default: false
     },
     status: {
         type: String,
@@ -36,5 +36,11 @@ const reservationSchema = new mongoose.Schema({
     timestamps: true,
     collection: 'reservations'
 });
+
+// Prevent double-booking same room/date/timeSlot
+reservationSchema.index(
+    { roomID: 1, reservationDate: 1, timeSlot: 1 },
+    { unique: true, name: 'unique_room_date_time' }
+);
 
 module.exports = mongoose.model('Reservation', reservationSchema);
