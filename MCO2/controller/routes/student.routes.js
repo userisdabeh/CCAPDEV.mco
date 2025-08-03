@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const multer = require('multer');
-const mongoose = require('mongoose');
 
 const User = require('../../model/user.model.js');
 const Room = require('../../model/room.model.js');
@@ -117,34 +116,19 @@ router.post('/student/reserve/:id', async (req, res) => {
     return res.status(400).json({ success: false, message: 'Room, date, and time are required.' });
   }
 
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
   try {
-    const user = await User.findById(studentID).session(session);
+    const user = await User.findById(studentID);
     if (!user) {
-      await session.abortTransaction();
-      session.endSession();
       return res.status(404).json({ success: false, message: 'Student not found.' });
     }
 
-    const roomDoc = await Room.findOne({ roomName: room }).session(session);
+    const roomDoc = await Room.findOne({ roomName: room });
     if (!roomDoc) {
-      await session.abortTransaction();
-      session.endSession();
       return res.status(400).json({ success: false, message: 'Invalid room selected.' });
-    }
-
-    if (roomDoc.roomStatus !== 'Available') {
-      await session.abortTransaction();
-      session.endSession();
-      return res.status(400).json({ success: false, message: 'That room is not available.' });
     }
 
     const reservationDate = new Date(date);
     if (isNaN(reservationDate.getTime())) {
-      await session.abortTransaction();
-      session.endSession();
       return res.status(400).json({ success: false, message: 'Invalid date.' });
     }
 
@@ -157,23 +141,7 @@ router.post('/student/reserve/:id', async (req, res) => {
       timeSlot
     });
     if (existing) {
-      await session.abortTransaction();
-      session.endSession();
       return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
-    }
-
-    const maxReservations = roomDoc.roomSlots;
-
-    const existingReservationsCount = await Reservation.countDocuments({
-      roomID: roomDoc._id,
-      reservationDate,
-      timeSlot
-    }).session(session);
-
-    if (existingReservationsCount >= maxReservations) {
-      await session.abortTransaction();
-      session.endSession();
-      return res.status(400).json({ success: false, message: 'That slot is already full.' });
     }
 
     const reservation = new Reservation({
@@ -185,16 +153,10 @@ router.post('/student/reserve/:id', async (req, res) => {
       userID: studentID
     });
 
-    await reservation.save({ session });
-
-    await session.commitTransaction();
-    session.endSession();
+    await reservation.save();
 
     return res.json({ success: true, reservation });
   } catch (err) {
-    await session.abortTransaction();
-    session.endSession();
-
     if (err.code === 11000) {
       return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
     }
@@ -203,6 +165,27 @@ router.post('/student/reserve/:id', async (req, res) => {
   }
 });
 
+// DELETE Reservation
+router.post('/student/delete/:id', async (req, res) => {
+  const reservationId = req.params.id;
+  const userID = req.body.userId;
+
+  try {
+    const deleted = await Reservation.findByIdAndDelete(reservationId);
+    if (!deleted) {
+      return res.status(404).send('Reservation not found.');
+    }
+
+    if (!userID) {
+      return res.status(400).send('Missing user ID.');
+    }
+
+    res.redirect(`/student/dashboard/${userID}`);
+  } catch (err) {
+    console.error('Error deleting reservation:', err);
+    res.status(500).send('Server error during deletion.');
+  }
+});
 
 router.get('/student/profile/:id', async (req, res) => {
     const studentID = req.params.id;
