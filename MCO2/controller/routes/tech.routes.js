@@ -22,7 +22,40 @@ router.get('/tech/dashboard/:id', async (req, res) => {
             return res.status(403).send('Unauthorized');
         }
 
-        const reservations = await Reservation.find().populate('userID roomID').lean();
+        const reservations = await Reservation.find()
+            .populate('userID roomID')
+            .sort({ createdAt: -1 })
+            .lean();
+
+        const processedReservations = reservations.map(reservation => {
+            const reservationDateTime = new Date(reservation.reservationDate);
+            
+            let reservationTime;
+            if (reservation.timeSlot) {
+                const [startTime] = reservation.timeSlot.split(' - ');
+                const [hours, minutes] = startTime.split(':');
+                reservationDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+                reservationTime = reservationDateTime;
+            } else if (reservation.startTime) {
+                reservationTime = new Date(reservation.startTime);
+            } else {
+                reservationTime = new Date(reservation.reservationDate);
+            }
+            
+            const now = new Date();
+            const timeDifference = Math.abs(now - reservationTime);
+            const minutesDifference = Math.floor(timeDifference / 60000);
+            
+            const isWithinRemovalWindow = minutesDifference <= 10;
+            
+            const isExpired = now > reservationTime;
+            
+            return {
+                ...reservation,
+                isWithinRemovalWindow,
+                isExpired
+            };
+        });
 
         const rooms = await Room.find().lean();
         const totalSlots = rooms.reduce((sum, room) => sum + room.roomSlots, 0);
@@ -30,16 +63,28 @@ router.get('/tech/dashboard/:id', async (req, res) => {
         const availableLabs = await Room.find({ roomStatus: 'available' }).lean();
         const underMaintenanceLabs = await Room.find({ roomStatus: 'maintenance' }).lean();
 
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const totalThisMonth = await Reservation.countDocuments({
+            createdAt: { $gte: startOfMonth }
+        });
+
+        const activeReservations = await Reservation.countDocuments({
+            status: { $in: ['Pending', 'Confirmed'] }
+        });
+
         res.render('tech/dashboard', {
             layout: 'tech',
             title: 'GoKoLab Technician Dashboard',
             stylesheets: ['tech_dashboard.css'],
             user,
-            reservations,
+            reservations: processedReservations,
             activeDashboard: true,
             totalSlots,
             availableLabs,
-            underMaintenanceLabs
+            underMaintenanceLabs,
+            totalThisMonth,
+            activeReservations
         });
     } catch (error) {
         console.error('Error loading technician dashboard:', error);
@@ -121,15 +166,51 @@ router.post('/tech/update-profile/:id', upload.single('profilePicture'), async (
     }
 });
 
-router.post('/tech/delete-account/:id', async (req, res) => {
+router.post('/tech/delete-reservation/:id', async (req, res) => {
     try {
-        const userID = req.params.id;
-        await Reservation.deleteMany({ userID });
-        await User.findByIdAndDelete(userID);
-        res.redirect('/');
-    } catch (err) {
-        console.error('Error deleting account:', err);
-        res.status(500).send('Failed to delete account');
+        const technicianID = req.body.technicianId;
+        const reservationId = req.params.id;
+        
+        const user = await User.findById(technicianID);
+        if (!user || user.type !== 'technician') {
+            return res.status(403).send('Unauthorized');
+        }
+
+        const reservation = await Reservation.findById(reservationId).populate('roomID');
+        if (!reservation) {
+            return res.status(404).send('Reservation not found');
+        }
+
+        const reservationDateTime = new Date(reservation.reservationDate);
+        
+        let reservationTime;
+        if (reservation.timeSlot) {
+            const [startTime] = reservation.timeSlot.split(' - ');
+            const [hours, minutes] = startTime.split(':');
+            reservationDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            reservationTime = reservationDateTime;
+        } else if (reservation.startTime) {
+            reservationTime = new Date(reservation.startTime);
+        } else {
+            reservationTime = new Date(reservation.reservationDate);
+        }
+        
+        const now = new Date();
+        const timeDifference = Math.abs(now - reservationTime);
+        const minutesDifference = Math.floor(timeDifference / 60000);
+        const reservationHasPassed = now > reservationTime;
+        const minutesPastReservation = Math.floor((now - reservationTime) / 60000);
+        
+        if (!reservationHasPassed || minutesPastReservation < 10) {
+            return res.status(400).send('Reservation can only be deleted if the reservation time has passed by 10 minutes or more (student no-show)');
+        }
+
+        await Reservation.findByIdAndDelete(reservationId);
+        
+        res.redirect(`/tech/dashboard/${technicianID}`);
+    } catch (error) {
+        console.error('Error deleting reservation:', error);
+        res.status(500).send('Server Error');
     }
 });
 
@@ -204,6 +285,93 @@ router.get('/tech/otherprofile/:id', async (req, res) => {
     } catch (err) {
         console.error('Error loading other profile:', err);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+router.get('/tech/edit-reservation/:id/:technicianId', async (req, res) => {
+    try {
+        const technicianID = req.params.technicianId;
+        const reservationId = req.params.id;
+        
+        const user = await User.findById(technicianID);
+        if (!user || user.type !== 'technician') {
+            return res.status(403).send('Unauthorized');
+        }
+
+        const reservation = await Reservation.findById(reservationId).populate('userID roomID');
+        if (!reservation) {
+            return res.status(404).send('Reservation not found');
+        }
+
+        const reservationDateTime = new Date(reservation.reservationDate);
+        
+        let reservationTime;
+        if (reservation.timeSlot) {
+            const [startTime] = reservation.timeSlot.split(' - ');
+            const [hours, minutes] = startTime.split(':');
+            reservationDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            reservationTime = reservationDateTime;
+        } else if (reservation.startTime) {
+            reservationTime = new Date(reservation.startTime);
+        } else {
+            reservationTime = new Date(reservation.reservationDate);
+        }
+        
+        const now = new Date();
+        const reservationHasPassed = now > reservationTime;
+        const minutesPastReservation = Math.floor((now - reservationTime) / 60000);
+        
+        if (!reservationHasPassed || minutesPastReservation < 10) {
+            return res.status(400).send('Reservation can only be edited if the reservation time has passed by 10 minutes or more (student no-show)');
+        }
+
+        const rooms = await Room.find().lean();
+        
+        res.render('tech/reserve', {
+            layout: 'tech',
+            title: 'Edit Reservation',
+            stylesheets: ['tech_reserve.css'],
+            scripts: ['reserve.js'],
+            user,
+            reservation,
+            rooms,
+            isEditing: true,
+            activeReserve: true
+        });
+    } catch (error) {
+        console.error('Error loading reservation for edit:', error);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.post('/tech/update-reservation/:id/:technicianId', async (req, res) => {
+    try {
+        const technicianID = req.params.technicianId;
+        const reservationId = req.params.id;
+        const { room, date, time, name, anonymous } = req.body;
+        
+        const user = await User.findById(technicianID);
+        if (!user || user.type !== 'technician') {
+            return res.status(403).send('Unauthorized');
+        }
+
+        const reservation = await Reservation.findById(reservationId);
+        if (!reservation) {
+            return res.status(404).send('Reservation not found');
+        }
+
+        reservation.roomID = room;
+        reservation.reservationDate = new Date(date);
+        reservation.timeSlot = time;
+        reservation.name = name || 'Anonymous';
+        reservation.anonymous = !!anonymous;
+
+        await reservation.save();
+        
+        res.redirect(`/tech/dashboard/${technicianID}`);
+    } catch (error) {
+        console.error('Error updating reservation:', error);
+        res.status(500).send('Server Error');
     }
 });
 
