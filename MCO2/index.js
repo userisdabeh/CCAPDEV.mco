@@ -2,7 +2,6 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const multer = require('multer');
 const dayjs = require('dayjs');
 
@@ -49,12 +48,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
-        collectionName: 'sessions',
-        ttl: 24 * 60 * 60 // 1 day in seconds
-    }),
-    cookie: {
+        cookie: {
         secure: false, 
         sameSite: 'lax',
         maxAge: 1000 * 60 * 60 * 24 

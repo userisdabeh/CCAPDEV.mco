@@ -6,6 +6,7 @@ const multer = require('multer');
 const User = require('../../model/user.model.js');
 const Room = require('../../model/room.model.js');
 const Reservation = require('../../model/reservation.model.js'); // assumed schema includes room, date, time, name, anonymous, userID
+const Error = require('../../model/errors.model.js');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -39,7 +40,17 @@ router.get('/student/dashboard/:id', async (req, res) => {
   try {
     const user = await User.findOne({ _id: studentID }).lean();
     if (!user) {
+        await Error.create({
+            errorMessage: `User not found: ${studentID}`
+        });
       return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (user.type !== 'student') {
+        await Error.create({
+            errorMessage: `User is not a student: ${studentID}`
+        });
+        return res.status(403).json({ error: 'User is not a student' });
     }
 
     // Fetch recent reservations (e.g., last 5), newest first
@@ -72,6 +83,9 @@ router.get('/student/dashboard/:id', async (req, res) => {
       activeReservations
     });
   } catch (error) {
+    await Error.create({
+        errorMessage: `Failed to fetch user: ${studentID}`
+    });
     console.error('Error fetching user or reservations:', error);
     res.status(500).json({ error: 'Failed to fetch user' });
   }
@@ -83,7 +97,17 @@ router.get('/student/reserve/:id', async (req, res) => {
     try {
         const user = await User.findOne({ _id: studentID }).lean();
         if (!user) {
+            await Error.create({
+                errorMessage: `User not found: ${studentID}`
+            });
             return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (user.type !== 'student') {
+            await Error.create({
+                errorMessage: `User is not a student: ${studentID}`
+            });
+            return res.status(403).json({ error: 'User is not a student' });
         }
 
         const rooms = await Room.find({}).lean();
@@ -103,6 +127,9 @@ router.get('/student/reserve/:id', async (req, res) => {
             activeReserve: true
         });
     } catch (error) {
+        await Error.create({
+            errorMessage: `Failed to fetch user: ${studentID}`
+        });
         console.error('Error fetching user:', error);
         res.status(500).json({ error: 'Failed to fetch user' });
     }
@@ -120,16 +147,32 @@ router.post('/student/reserve/:id', async (req, res) => {
     
     const user = await User.findById(studentID);
     if (!user) {
+      await Error.create({
+        errorMessage: `Student not found: ${studentID}`
+      });
       return res.status(404).json({ success: false, message: 'Student not found.' });
+    }
+
+    if (user.type !== 'student') {
+      await Error.create({
+        errorMessage: `User is not a student: ${studentID}`
+      });
+      return res.status(403).json({ error: 'User is not a student' });
     }
 
     const roomDoc = await Room.findOne({ roomName: room });
     if (!roomDoc) {
+      await Error.create({
+        errorMessage: `Invalid room selected: ${room}`
+      });
       return res.status(400).json({ success: false, message: 'Invalid room selected.' });
     }
 
     const reservationDate = new Date(date);
     if (isNaN(reservationDate.getTime())) {
+      await Error.create({
+        errorMessage: `Invalid date: ${date}`
+      });
       return res.status(400).json({ success: false, message: 'Invalid date.' });
     }
 
@@ -142,6 +185,9 @@ router.post('/student/reserve/:id', async (req, res) => {
       timeSlot
     });
     if (existing) {
+      await Error.create({
+        errorMessage: `User tried to reserve a slot that is already reserved: ${studentID} ${room} ${date} ${time}`
+      });
       return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
     }
 
@@ -164,12 +210,18 @@ router.post('/student/reserve/:id', async (req, res) => {
       userID: studentID
     });
 
-    await reservation.save().catch(err => {
+    try {
+        await reservation.save();
+    } catch (err) {
         if (err.code === 11000) {
+            await Error.create({
+                errorMessage: `User tried to reserve a slot that is already reserved: ${studentID} ${room} ${date} ${time}`
+            });
+
             return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
         }
         throw err;
-    });
+    }
 
     const totalReservations = await Reservation.countDocuments({
         roomID: roomDoc._id,
@@ -182,15 +234,24 @@ router.post('/student/reserve/:id', async (req, res) => {
             _id: reservation._id
         });
 
+        await Error.create({
+            errorMessage: `Slot is already full: ${studentID} ${room} ${date} ${time}`
+        });
         return res.status(400).json({ success: false, message: 'That slot is already full.' });
     }
 
     return res.json({ success: true, reservation });
   } catch (err) {
     if (err.code === 11000) {
+      await Error.create({
+        errorMessage: `User tried to reserve a slot that is already reserved: ${studentID} ${room} ${date} ${time}`
+      });
       return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
     }
     console.error('Error creating reservation:', err);
+    await Error.create({
+        errorMessage: `Internal server error: ${studentID} ${room} ${date} ${time}`
+    });
     return res.status(500).json({ success: false, message: 'Internal server error.' });
   }
 });
@@ -200,19 +261,43 @@ router.post('/student/delete/:id', async (req, res) => {
   const reservationId = req.params.id;
   const userID = req.body.userId;
 
+  const user = await User.findById(userID);
+  if (!user) {
+    await Error.create({
+      errorMessage: `User not found: ${userID}`
+    });
+    return res.status(404).send('User not found.');
+  }
+
+  if (user.type !== 'student') {
+    await Error.create({
+      errorMessage: `User is not a student: ${userID}`
+    });
+    return res.status(403).send('User is not a student.');
+  }
+
   try {
     const deleted = await Reservation.findByIdAndDelete(reservationId);
     if (!deleted) {
+      await Error.create({
+        errorMessage: `Reservation not found: ${reservationId}`
+      });
       return res.status(404).send('Reservation not found.');
     }
 
     if (!userID) {
+      await Error.create({
+        errorMessage: `Missing user ID: ${userID}`
+      });
       return res.status(400).send('Missing user ID.');
     }
 
     res.redirect(`/student/dashboard/${userID}`);
   } catch (err) {
     console.error('Error deleting reservation:', err);
+    await Error.create({
+        errorMessage: `Server error during deletion: ${reservationId}`
+    });
     res.status(500).send('Server error during deletion.');
   }
 });
@@ -223,7 +308,17 @@ router.get('/student/profile/:id', async (req, res) => {
     try {
         const user = await User.findOne({ _id: studentID }).lean();
         if (!user) {
+            await Error.create({
+                errorMessage: `User not found: ${studentID}`
+            });
             return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (user.type !== 'student') {
+            await Error.create({
+                errorMessage: `User is not a student: ${studentID}`
+            });
+            return res.status(403).json({ error: 'User is not a student' });
         }
 
         const reservations = await Reservation.find({ userID: studentID }).populate('roomID').lean();
@@ -239,6 +334,9 @@ router.get('/student/profile/:id', async (req, res) => {
             activeProfile: true
         });
     } catch (error) {
+        await Error.create({
+            errorMessage: `Failed to fetch user: ${studentID}`
+        });
         console.error('Error fetching user:', error);
         res.status(500).json({ error: 'Failed to fetch user' });
     }
@@ -256,7 +354,19 @@ router.post('/student/update-profile/:id', upload.single('profilePicture'), asyn
         } = req.body;
 
         const user = await User.findById(userID);
-        if (!user) return res.status(404).send('User not found');
+        if (!user) {
+            await Error.create({
+                errorMessage: `User not found: ${userID}`
+            });
+            return res.status(404).send('User not found');
+        }
+
+        if (user.type !== 'student') {
+            await Error.create({
+                errorMessage: `User is not a student: ${userID}`
+            });
+            return res.status(403).send('User is not a student');
+        }
 
         user.firstName = firstName;
         user.lastName = lastName;
@@ -276,6 +386,9 @@ router.post('/student/update-profile/:id', upload.single('profilePicture'), asyn
         await user.save();
         res.redirect(`/student/profile/${userID}`);
     } catch (err) {
+        await Error.create({
+            errorMessage: `Failed to update profile: ${userID}`
+        });
         console.error('Profile update error:', err);
         res.status(500).send('Failed to update profile');
     }
@@ -284,6 +397,19 @@ router.post('/student/update-profile/:id', upload.single('profilePicture'), asyn
 router.post('/student/delete-account/:id', async (req, res) => {
     try {
         const userID = req.params.id;
+        const user = await User.findById(userID);
+        if (!user) {
+            await Error.create({
+                errorMessage: `User not found: ${userID}`
+            });
+        }
+
+        if (user.type !== 'student') {
+            await Error.create({
+                errorMessage: `User is not a student: ${userID}`
+            });
+            return res.status(403).send('User is not a student');
+        }
 
         // Delete reservations linked to user
         await Reservation.deleteMany({ userID });
@@ -295,12 +421,29 @@ router.post('/student/delete-account/:id', async (req, res) => {
 
         res.redirect('/'); // or to login screen
     } catch (err) {
+        await Error.create({
+            errorMessage: 'Failed to delete account'
+        });
         console.error('Error deleting account:', err);
         res.status(500).send('Failed to delete account');
     }
 });
 
-router.get('/student/search', (req, res) => {
+router.get('/student/search', async (req, res) => {
+    const user = req.session.user;
+    if (!user) {
+        await Error.create({
+            errorMessage: `User not found: ${userID}`
+        });
+        return res.status(401).send('Unauthorized');
+    }
+
+    if (user.type !== 'student') {
+        await Error.create({
+            errorMessage: `User is not a student: ${userID}`
+        });
+        return res.status(403).send('User is not a student');
+    }
     res.render('student/search', {
         layout: 'student',
         title: 'Search User Profile',
@@ -312,6 +455,21 @@ router.get('/student/search', (req, res) => {
 
 router.post('/student/search', async (req, res) => {
     const { email } = req.body;
+
+    const user = req.session.user;
+    if (!user) {
+        await Error.create({
+            errorMessage: `User not found: ${userID}`
+        });
+        return res.status(401).send('Unauthorized');
+    }
+
+    if (user.type !== 'student') {
+        await Error.create({
+            errorMessage: `User is not a student: ${userID}`
+        });
+        return res.status(403).send('User is not a student');
+    }
 
     try {
         const users = await User.find({ email: { $regex: email, $options: 'i' } }).lean();
@@ -332,6 +490,9 @@ router.post('/student/search', async (req, res) => {
 
         res.render('student/search', renderData);
     } catch (error) {
+        await Error.create({
+            errorMessage: 'Search error'
+        });
         console.error('Search error:', error);
         res.render('student/search', {
             layout: 'student',
@@ -346,6 +507,20 @@ router.post('/student/search', async (req, res) => {
 
 router.get('/student/otherprofile/:id', async (req, res) => {
     const id = req.params.id;
+    const user = await User.findById(id);
+    if (!user) {
+        await Error.create({
+            errorMessage: `User not found: ${id}`
+        });
+        return res.status(404).send('User not found.');
+    }
+
+    if (user.type !== 'student') {
+        await Error.create({
+            errorMessage: `User is not a student: ${id}`
+        });
+        return res.status(403).send('User is not a student');
+    }
 
     try {
         const profileUser = await User.findById(id).lean(); // searched user
@@ -369,6 +544,9 @@ router.get('/student/otherprofile/:id', async (req, res) => {
             activeSearch: true
         });
     } catch (err) {
+        await Error.create({
+            errorMessage: 'Error loading other profile'
+        });
         console.error('Error loading other profile:', err);
         res.status(500).send('Internal Server Error');
     }
