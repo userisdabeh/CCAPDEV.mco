@@ -8,7 +8,7 @@
             </div>
 
             <button type="button" class="edit-btn center" id="editProfileBtn">Edit Profile</button>
-            <button type="submit" class="save-btn center" id="saveProfileBtn" style="display:none;">Save Changes</button><br>
+            <br>
 
             <label>First Name:</label><br>
             <input type="text" id="firstName" name="firstName" value="{{user.firstName}}" disabled><br><br>
@@ -33,6 +33,8 @@
 
             <label>About Me:</label><br>
             <textarea id="aboutMe" name="aboutMe" rows="6" cols="50" disabled>{{user.aboutMe}}</textarea>
+            <br><br>
+             <button type="submit" class="save-btn center" id="saveProfileBtn" style="display:none;">Save Changes</button>
         </form>
     </div>
 
