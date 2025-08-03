@@ -5,7 +5,7 @@ const multer = require('multer');
 
 const User = require('../../model/user.model.js');
 const Room = require('../../model/room.model.js');
-const Reservation = require('../../model/reservation.model.js');
+const Reservation = require('../../model/reservation.model.js'); // assumed schema includes room, date, time, name, anonymous, userID
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -34,25 +34,47 @@ function getNext7DatesExcludingSundays() {
 }
 
 router.get('/student/dashboard/:id', async (req, res) => {
-    const studentID = req.params.id;
+  const studentID = req.params.id;
 
-    try {
-        const user = await User.findOne({ _id: studentID }).lean();
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        res.render('student/dashboard', {
-            layout: 'student',
-            title: 'GoKoLab Student Dashboard',
-            stylesheets: ['dashboard.css'],
-            user,
-            activeDashboard: true
-        });
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        res.status(500).json({ error: 'Failed to fetch user' });
+  try {
+    const user = await User.findOne({ _id: studentID }).lean();
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
+
+    // Fetch recent reservations (e.g., last 5), newest first
+    const recentReservations = await Reservation.find({ userID: studentID })
+      .populate('roomID')
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .lean();
+
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const totalThisMonth = await Reservation.countDocuments({
+      userID: studentID,
+      createdAt: { $gte: startOfMonth }
+    });
+
+    const activeReservations = await Reservation.countDocuments({
+      userID: studentID,
+      status: { $in: ['Pending', 'Confirmed'] }
+    });
+
+    res.render('student/dashboard', {
+      layout: 'student',
+      title: 'GoKoLab Student Dashboard',
+      stylesheets: ['dashboard.css'],
+      user,
+      activeDashboard: true,
+      recentReservations,
+      totalThisMonth,
+      activeReservations
+    });
+  } catch (error) {
+    console.error('Error fetching user or reservations:', error);
+    res.status(500).json({ error: 'Failed to fetch user' });
+  }
 });
 
 router.get('/student/reserve/:id', async (req, res) => {
@@ -67,6 +89,8 @@ router.get('/student/reserve/:id', async (req, res) => {
         const rooms = await Room.find({}).lean();
         const dates = getNext7DatesExcludingSundays();
 
+        const times = ['08:00-10:00', '10:00-12:00', '13:00-15:00', '15:00-17:00', '17:00-19:00'];
+
         res.render('student/reserve', {
             layout: 'student',
             title: 'GoKoLab Student Dashboard - Reserve',
@@ -75,6 +99,7 @@ router.get('/student/reserve/:id', async (req, res) => {
             user,
             rooms,
             dates,
+            times,
             activeReserve: true
         });
     } catch (error) {
@@ -82,6 +107,64 @@ router.get('/student/reserve/:id', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch user' });
     }
 });
+
+router.post('/student/reserve/:id', async (req, res) => {
+  const studentID = req.params.id;
+  const { room, date, time, name = '', anonymous = false } = req.body;
+
+  if (!room || !date || !time) {
+    return res.status(400).json({ success: false, message: 'Room, date, and time are required.' });
+  }
+
+  try {
+    const user = await User.findById(studentID);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Student not found.' });
+    }
+
+    const roomDoc = await Room.findOne({ roomName: room });
+    if (!roomDoc) {
+      return res.status(400).json({ success: false, message: 'Invalid room selected.' });
+    }
+
+    const reservationDate = new Date(date);
+    if (isNaN(reservationDate.getTime())) {
+      return res.status(400).json({ success: false, message: 'Invalid date.' });
+    }
+
+    const timeSlot = time; 
+    const displayName = anonymous || !name.trim() ? 'Anonymous' : name.trim();
+
+    const existing = await Reservation.findOne({
+      roomID: roomDoc._id,
+      reservationDate,
+      timeSlot
+    });
+    if (existing) {
+      return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
+    }
+
+    const reservation = new Reservation({
+      roomID: roomDoc._id,
+      reservationDate,
+      timeSlot,
+      name: displayName,
+      anonymous: !!anonymous,
+      userID: studentID
+    });
+
+    await reservation.save();
+
+    return res.json({ success: true, reservation });
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(409).json({ success: false, message: 'That slot is already reserved.' });
+    }
+    console.error('Error creating reservation:', err);
+    return res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
+});
+
 
 router.get('/student/profile/:id', async (req, res) => {
     const studentID = req.params.id;
@@ -176,7 +259,6 @@ router.get('/student/search', (req, res) => {
     });
 });
 
-
 router.post('/student/search', async (req, res) => {
     const { email } = req.body;
 
@@ -210,7 +292,6 @@ router.post('/student/search', async (req, res) => {
         });
     }
 });
-
 
 router.get('/student/otherprofile/:id', async (req, res) => {
     const id = req.params.id;
