@@ -33,14 +33,13 @@ img {
 
 .info-box {
     width: 100%;
-    height: 100%;
+    max-width: 420px;
     border: 1px solid rgb(103, 103, 103);
     border-radius: 10px;
     padding: 20px 45px 20px 20px;
-    max-width: 20%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 12px;
 }
 
 .other-ibox {
@@ -57,10 +56,11 @@ img {
     flex-wrap: wrap;
     border-radius: 10px;
     width: 100%;
+    gap: 10px;
 }
 
 .flex-row > div {
-    margin: 10px;
+    margin: 0;
 }
 
 .flex-col {
@@ -118,6 +118,26 @@ img {
 
 .save-btn:hover {
     background-color: #0056b3;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
 }
 
 input[disabled],
